@@ -1,0 +1,891 @@
+openapi: 3.0.0
+
+info:
+  title: ToDo List System API
+  version: 0.0.1
+
+servers:
+  - url: https://localhost:8080
+
+tags:
+  - name: Users
+    description: Set of API endpoints responsible for CRUD of Users objects.
+  - name: Tasks
+    description: Set of API endpoints responsible for CRUD of Tasks objects.
+  - name: Categories
+    description: Set of API endpoints responsible for CRUD of Categories objects.
+  - name: Subtasks
+    description: Set of API endpoints responsible for CRUD of Subtasks objects.
+  - name: Comments
+    description: Set of API endpoints responsible for CRUD of Comments objects.
+  - name: Attachments
+    description: Set of API endpoints responsible for CRUD of Attachments objects.
+
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Creating User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        201:
+          description: Specified User object (resource) was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Specified User object contains invalid data.
+
+    get:
+      tags:
+        - Users
+      summary: Reading User's list.
+      responses:
+        200:
+          description: All User objects (resources) were successfully read.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: Reading specified User.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Specified User object (resource) was successfully read.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+    put:
+      tags:
+        - Users
+      summary: Updating specified User.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        200:
+          description: Specified User object (resource) was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+    delete:
+      tags:
+        - Users
+      summary: Deleting specified User.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Specified User object (resource) was successfully deleted.
+
+  /tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Retrieve all tasks.
+      description: Retrieves a list of all Task objects.
+      responses:
+        200:
+          description: List of Task objects was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+    post:
+      tags:
+        - Tasks
+      summary: Create a new task
+      description: Creates a new Task object.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+      responses:
+        201:
+          description: Task object was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          description: Task object contains invalid data.
+
+  /tasks/{taskId}:
+
+    get:
+      tags:
+        - Tasks
+      summary: Retrieve a specific task.
+      description: Retrieves a Task object by its unique ID.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Task object was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        404:
+          description: Task object not found.
+
+    put:
+      tags:
+        - Tasks
+      summary: Update a task
+      description: Updates a specific Task object.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+      responses:
+        200:
+          description: Task object was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        404:
+          description: Task object not found.
+
+    delete:
+      tags:
+        - Tasks
+      summary: Delete a task
+      description: Deletes a Task object by its unique ID.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Task object was successfully deleted.
+        404:
+          description: Task object not found.
+
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve all categories.
+      responses:
+        200:
+          description: Retrieves a list of all Category objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+    post:
+      tags:
+        - Categories
+      summary: Create a new Category.
+      description: Creates a new Category object.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
+      responses:
+        201:
+          description: Category object was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          description: Category object contains invalid data.
+
+  /categories/{categoryId}:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve a specific Category.
+      description: Retrieves a Category object by its unique ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Category object was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: Category object not found.
+
+    put:
+      tags:
+        - Categories
+      summary: Update a Category.
+      description: Updates a specific Category object.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
+      responses:
+        200:
+          description: Category object was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: Category object not found.
+
+    delete:
+      tags:
+        - Categories
+      summary: Delete a Category.
+      description: Deletes a Category object by its unique ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Category object was successfully deleted.
+        404:
+          description: Category object not found.
+
+  /subtasks:
+    get:
+      tags:
+        - Subtasks
+      summary: Retrieve all subtasks
+      description: Retrieves a list of all Subtask objects.
+      responses:
+        200:
+          description: List of Subtask objects was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subtask'
+
+    post:
+      tags:
+        - Subtasks
+      summary: Create a new subtask
+      description: Creates a new Subtask object.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubtaskInput'
+      responses:
+        201:
+          description: Subtask object was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subtask'
+        400:
+          description: Subtask object contains invalid data.
+
+  /subtasks/{subtaskId}:
+    get:
+      tags:
+        - Subtasks
+      summary: Retrieve a specific subtask
+      description: Retrieves a Subtask object by its unique ID.
+      parameters:
+        - name: subtaskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Subtask object was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subtask'
+        404:
+          description: Subtask object not found.
+
+    put:
+      tags:
+        - Subtasks
+      summary: Update a subtask
+      description: Updates a specific Subtask object.
+      parameters:
+        - name: subtaskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubtaskInput'
+      responses:
+        200:
+          description: Subtask object was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subtask'
+        404:
+          description: Subtask object not found.
+    delete:
+      tags:
+        - Subtasks
+      summary: Delete a subtask
+      description: Deletes a Subtask object by its unique ID.
+      parameters:
+        - name: subtaskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Subtask object was successfully deleted.
+        404:
+          description: Subtask object not found.
+
+  /comments:
+    get:
+      tags:
+        - Comments
+      summary: Retrieve all comments
+      description: Retrieves a list of all Comment objects.
+      responses:
+        200:
+          description: List of Comment objects was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+
+    post:
+      tags:
+        - Comments
+      summary: Create a new comment
+      description: Creates a new Comment object.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        201:
+          description: Comment object was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: Comment object contains invalid data.
+
+  /comments/{commentId}:
+    get:
+      tags:
+        - Comments
+      summary: Retrieve a specific comment
+      description: Retrieves a Comment object by its unique ID.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Comment object was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        404:
+          description: Comment object not found.
+
+    put:
+      tags:
+        - Comments
+      summary: Update a comment
+      description: Updates a specific Comment object.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        200:
+          description: Comment object was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        404:
+          description: Comment object not found.
+
+    delete:
+      tags:
+        - Comments
+      summary: Delete a comment
+      description: Deletes a Comment object by its unique ID.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Comment object was successfully deleted.
+        404:
+          description: Comment object not found.
+
+  /attachments:
+    get:
+      tags:
+        - Attachments
+      summary: Retrieve all attachments
+      description: Retrieves a list of all Attachment objects.
+      responses:
+        200:
+          description: List of Attachment objects was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+
+    post:
+      tags:
+        - Attachments
+      summary: Upload a new attachment
+      description: Uploads a new Attachment object.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttachmentInput'
+      responses:
+        201:
+          description: Attachment object was successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        400:
+          description: Attachment object contains invalid data.
+
+  /attachments/{attachmentId}:
+    get:
+      tags:
+        - Attachments
+      summary: Retrieve a specific attachment
+      description: Retrieves an Attachment object by its unique ID.
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Attachment object was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        404:
+          description: Attachment object not found.
+
+    delete:
+      tags:
+        - Attachments
+      summary: Delete an attachment
+      description: Deletes an Attachment object by its unique ID.
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Attachment object was successfully deleted.
+        404:
+          description: Attachment object not found.
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - email
+      properties:
+        id:
+          type: string
+
+        username:
+          type: string
+
+        email:
+          type: string
+
+        created_at:
+          type: string
+
+        updated_at:
+          type: string
+
+    UserInput:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+
+        email:
+          type: string
+
+        password:
+          type: string
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        user_id:
+          type: string
+          format: uuid
+
+        title:
+          type: string
+          maxLength: 100
+
+        description:
+          type: string
+          nullable: true
+
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+          default: PENDING
+
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+          default: MEDIUM
+
+        due_date:
+          type: string
+          format: date-time
+          nullable: true
+
+        created_at:
+          type: string
+          format: date-time
+          default: now()
+
+        updated_at:
+          type: string
+          format: date-time
+          default: now()
+
+    TaskInput:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+
+        title:
+          type: string
+          maxLength: 100
+
+        description:
+          type: string
+          nullable: true
+
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+          default: PENDING
+
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+          default: MEDIUM
+
+        due_date:
+          type: string
+          format: date-time
+          nullable: true
+
+
+    Category:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        id:
+          type: string
+
+        name:
+          type: string
+
+        description:
+          type: string
+
+        user_id:
+          type: string
+
+    CategoryInput:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+
+        description:
+          type: string
+
+        user_id:
+          type: string
+
+    Subtask:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        task_id:
+          type: string
+          format: uuid
+
+        title:
+          type: string
+          maxLength: 100
+
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+          default: PENDING
+
+        created_at:
+          type: string
+          format: date-time
+          default: now()
+
+        updated_at:
+          type: string
+          format: date-time
+          default: now()
+
+    SubtaskInput:
+      type: object
+      properties:
+        task_id:
+          type: string
+          format: uuid
+
+        title:
+          type: string
+          maxLength: 100
+
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+          default: PENDING
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        task_id:
+          type: string
+          format: uuid
+
+        user_id:
+          type: string
+          format: uuid
+
+        content:
+          type: string
+
+        created_at:
+          type: string
+          format: date-time
+          default: now()
+
+        updated_at:
+          type: string
+          format: date-time
+          default: now()
+
+    CommentInput:
+      type: object
+      properties:
+        task_id:
+          type: string
+          format: uuid
+
+        user_id:
+          type: string
+          format: uuid
+
+        content:
+          type: string
+          description: The content of the comment.
+          minLength: 1
+
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        task_id:
+          type: string
+          format: uuid
+
+        file_name:
+          type: string
+          description: The name of the uploaded file.
+
+        file_path:
+          type: string
+          description: The storage path of the uploaded file.
+
+        file_type:
+          type: string
+          description: The MIME type of the file (e.g., "image/png", "application/pdf).
+
+        file_size:
+          type: integer
+          description: The size of the file in bytes.
+
+        uploaded_at:
+          type: string
+          format: date-time
+          description: The timestamp when the file was uploaded.
+
+    AttachmentInput:
+      type: object
+      properties:
+        task_id:
+          type: string
+          format: uuid
+          description: The ID of the associated task.
+
+        file:
+          type: string
+          format: binary
+          description: The file to be uploaded.
