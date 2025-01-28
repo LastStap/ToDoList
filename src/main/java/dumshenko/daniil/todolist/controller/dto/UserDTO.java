@@ -1,23 +1,27 @@
 package dumshenko.daniil.todolist.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO {
 
      private String id;
      private String password;
      private String username;
      private String email;
-     private String created_at;
-     private String updated_at;
+    @JsonProperty("created_at")
+     private String createdAt;
+    @JsonProperty("updated_at")
+     private String updatedAt;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String email, String created_at, String updated_at, String id, String password) {
+    public UserDTO(String username, String email, String createdAt, String updatedAt, String id, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.password = password;
     }
 
@@ -53,20 +57,20 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -76,8 +80,8 @@ public class UserDTO {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
+                ", created_at='" + createdAt + '\'' +
+                ", updated_at='" + updatedAt + '\'' +
                 '}';
     }
 }
