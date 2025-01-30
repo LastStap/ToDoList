@@ -8,15 +8,12 @@ public class CreateCategoryDTO {
 
     private String name;
     private String description;
-    @JsonProperty("user_id")
-    private String userId;
 
     public CreateCategoryDTO() {}
 
-    public CreateCategoryDTO(String name, String description, String userId) {
+    public CreateCategoryDTO(String name, String description) {
         this.name = name;
         this.description = description;
-        this.userId = userId;
     }
 
     public String getName() {
@@ -35,23 +32,15 @@ public class CreateCategoryDTO {
         this.description = description;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CreateCategoryDTO that = (CreateCategoryDTO) o;
-        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(userId, that.userId);
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, userId);
+        return Objects.hash(name, description);
     }
 }

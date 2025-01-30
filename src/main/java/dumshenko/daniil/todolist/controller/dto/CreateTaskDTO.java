@@ -12,19 +12,16 @@ public class CreateTaskDTO {
     private String priority;
     @JsonProperty("due_date")
     private String dueDate;
-    @JsonProperty("user_id")
-    private String userId;
 
     public CreateTaskDTO() {
     }
 
-    public CreateTaskDTO(String title, String description, String status, String priority, String dueDate, String userId) {
+    public CreateTaskDTO(String title, String description, String status, String priority, String dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
-        this.userId = userId;
     }
 
     public String getTitle() {
@@ -67,23 +64,15 @@ public class CreateTaskDTO {
         this.dueDate = dueDate;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CreateTaskDTO that = (CreateTaskDTO) o;
-        return Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(status, that.status) && Objects.equals(priority, that.priority) && Objects.equals(dueDate, that.dueDate) && Objects.equals(userId, that.userId);
+        return Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(status, that.status) && Objects.equals(priority, that.priority) && Objects.equals(dueDate, that.dueDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, status, priority, dueDate, userId);
+        return Objects.hash(title, description, status, priority, dueDate);
     }
 }

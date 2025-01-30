@@ -11,18 +11,15 @@ public class SubtaskDTO {
     private String createdAt;
     @JsonProperty("updated_at")
     private String updatedAt;
-    @JsonProperty("task_id")
-    private String taskId;
 
     public SubtaskDTO() {}
 
-    public SubtaskDTO(String id, String title, String status, String createdAt, String updatedAt, String taskId) {
+    public SubtaskDTO(String id, String title, String status, String createdAt, String updatedAt) {
         this.id = id;
         this.title = title;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.taskId = taskId;
     }
 
     public String getId() {
@@ -65,14 +62,6 @@ public class SubtaskDTO {
         this.updatedAt = updatedAt;
     }
 
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
     @Override
     public String toString() {
         return "SubtaskDTO{" +
@@ -81,7 +70,6 @@ public class SubtaskDTO {
                 ", status='" + status + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
-                ", taskId='" + taskId + '\'' +
                 '}';
     }
 }
