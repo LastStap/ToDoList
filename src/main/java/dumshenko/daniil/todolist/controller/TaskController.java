@@ -19,7 +19,7 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<List<TaskDTO>> getTasks() {
         List<TaskDTO> tasks = new ArrayList<>(tasksMap.values());
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
 
     @PostMapping
@@ -44,7 +44,7 @@ public class TaskController {
     public ResponseEntity<TaskDTO> getTask(@PathVariable String taskId) {
         TaskDTO taskDTO = tasksMap.get(taskId);
         if (taskDTO == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(taskDTO);
     }
