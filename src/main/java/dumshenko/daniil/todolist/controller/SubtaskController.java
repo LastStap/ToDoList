@@ -1,7 +1,5 @@
 package dumshenko.daniil.todolist.controller;
 
-
-import dumshenko.daniil.todolist.controller.dto.CreateSubtaskDTO;
 import dumshenko.daniil.todolist.controller.dto.SubtaskDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +21,18 @@ public class SubtaskController {
     }
 
     @PostMapping
-    public ResponseEntity<SubtaskDTO> createSubtask(@RequestBody CreateSubtaskDTO createSubtaskDTO) {
+    public ResponseEntity<SubtaskDTO> createSubtask(@RequestBody SubtaskDTO subtaskDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        SubtaskDTO subtaskDTO = new SubtaskDTO();
         subtaskDTO.setId(id);
-        subtaskDTO.setTitle(createSubtaskDTO.getTitle());
-        subtaskDTO.setStatus(createSubtaskDTO.getStatus());
+        subtaskDTO.setTitle(subtaskDTO.getTitle());
+        subtaskDTO.setStatus(subtaskDTO.getStatus());
         subtaskDTO.setCreatedAt(now.toString());
+
+        if(subtaskDTO.getTaskId() != null) {
+            subtaskDTO.setTaskId(null);
+        }
 
         subtasksMap.put(id, subtaskDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(subtaskDTO);

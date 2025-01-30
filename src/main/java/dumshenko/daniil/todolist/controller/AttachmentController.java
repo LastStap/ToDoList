@@ -21,17 +21,20 @@ public class AttachmentController {
     }
 
     @PostMapping
-    public ResponseEntity<AttachmentDTO> createAttachment(@RequestBody AttachmentDTO attachment) {
+    public ResponseEntity<AttachmentDTO> createAttachment(@RequestBody AttachmentDTO attachmentDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        AttachmentDTO attachmentDTO = new AttachmentDTO();
         attachmentDTO.setId(id);
-        attachmentDTO.setFileName(attachment.getFileName());
-        attachmentDTO.setFileSize(attachment.getFileSize());
-        attachmentDTO.setFileType(attachment.getFileType());
-        attachmentDTO.setFilePath(attachment.getFilePath());
+        attachmentDTO.setFileName(attachmentDTO.getFileName());
+        attachmentDTO.setFileSize(attachmentDTO.getFileSize());
+        attachmentDTO.setFileType(attachmentDTO.getFileType());
+        attachmentDTO.setFilePath(attachmentDTO.getFilePath());
         attachmentDTO.setUploadedAt(now.toString());
+
+        if(attachmentDTO.getTaskId() != null) {
+            attachmentDTO.setTaskId(null);
+        }
 
         attachmentMap.put(id, attachmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(attachmentDTO);

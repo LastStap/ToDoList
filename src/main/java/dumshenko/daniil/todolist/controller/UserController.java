@@ -1,6 +1,5 @@
 package dumshenko.daniil.todolist.controller;
 
-import dumshenko.daniil.todolist.controller.dto.CreateUserDTO;
 import dumshenko.daniil.todolist.controller.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +25,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        UserDTO userDTO = new UserDTO();
         userDTO.setId(id);
-        userDTO.setUsername(createUserDTO.getUsername());
-        userDTO.setEmail(createUserDTO.getEmail());
-        userDTO.setPassword(createUserDTO.getPassword());
+        userDTO.setUsername(userDTO.getUsername());
+        userDTO.setPassword(userDTO.getPassword());
+        userDTO.setEmail(userDTO.getEmail());
         userDTO.setCreatedAt(now.toString());
 
         usersMap.put(id, userDTO);

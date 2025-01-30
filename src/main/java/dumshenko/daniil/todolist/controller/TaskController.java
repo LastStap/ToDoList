@@ -1,7 +1,6 @@
 package dumshenko.daniil.todolist.controller;
 
 
-import dumshenko.daniil.todolist.controller.dto.CreateTaskDTO;
 import dumshenko.daniil.todolist.controller.dto.TaskDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +22,21 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody CreateTaskDTO createTaskDTO) {
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        TaskDTO taskDTO = new TaskDTO();
         taskDTO.setId(id);
-        taskDTO.setTitle(createTaskDTO.getTitle());
-        taskDTO.setDescription(createTaskDTO.getDescription());
-        taskDTO.setStatus(createTaskDTO.getStatus());
-        taskDTO.setPriority(createTaskDTO.getPriority());
-        taskDTO.setDueDate(createTaskDTO.getDueDate());
+        taskDTO.setTitle(taskDTO.getTitle());
+        taskDTO.setDescription(taskDTO.getDescription());
+        taskDTO.setStatus(taskDTO.getStatus());
+        taskDTO.setPriority(taskDTO.getPriority());
+        taskDTO.setDueDate(taskDTO.getDueDate());
         taskDTO.setCreatedAt(now.toString());
+
+        if(taskDTO.getUserId() != null) {
+            taskDTO.setUserId(null);
+        }
 
         tasksMap.put(id, taskDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskDTO);

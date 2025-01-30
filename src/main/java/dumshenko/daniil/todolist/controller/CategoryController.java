@@ -1,7 +1,6 @@
 package dumshenko.daniil.todolist.controller;
 
 import dumshenko.daniil.todolist.controller.dto.CategoryDTO;
-import dumshenko.daniil.todolist.controller.dto.CreateCategoryDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +22,17 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CreateCategoryDTO createcategoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(id);
-        categoryDTO.setName(createcategoryDTO.getName());
-        categoryDTO.setDescription(createcategoryDTO.getDescription());
+        categoryDTO.setName(categoryDTO.getName());
+        categoryDTO.setDescription(categoryDTO.getDescription());
+
+        if(categoryDTO.getUserId() != null) {
+            categoryDTO.setUserId(null);
+        }
 
         categoriesMap.put(id, categoryDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryDTO);

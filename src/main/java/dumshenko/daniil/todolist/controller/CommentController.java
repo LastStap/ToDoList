@@ -21,14 +21,21 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO comment) {
+    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(id);
-        commentDTO.setContent(comment.getContent());
+        commentDTO.setContent(commentDTO.getContent());
         commentDTO.setCreatedAt(now.toString());
+
+        if(commentDTO.getTaskId() != null) {
+            commentDTO.setTaskId(null);
+        }
+
+        if(commentDTO.getUserId() != null) {
+            commentDTO.setUserId(null);
+        }
 
         commentMap.put(id, commentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentDTO);
@@ -53,22 +60,22 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> updateComment(@PathVariable String commentId, @RequestBody CommentDTO comment) {
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable String commentId, @RequestBody CommentDTO commentDTO) {
         Instant now = Instant.now();
 
-        CommentDTO commentDTO = commentMap.get(commentId);
+        CommentDTO currentComment = commentMap.get(commentId);
 
-        if (commentDTO == null) {
+        if (currentComment == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        if(!comment.getContent().equals(commentDTO.getContent())) {
-            commentDTO.setContent(comment.getContent());
+        if(!commentDTO.getContent().equals(currentComment.getContent())) {
+            currentComment.setContent(commentDTO.getContent());
         }
 
-        commentDTO.setUpdatedAt(now.toString());
-        commentMap.put(commentId, commentDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(commentDTO);
+        currentComment.setUpdatedAt(now.toString());
+        commentMap.put(commentId, currentComment);
+        return ResponseEntity.status(HttpStatus.OK).body(currentComment);
     }
 
 }
