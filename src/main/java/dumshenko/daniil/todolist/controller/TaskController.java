@@ -52,7 +52,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<TaskDTO> deleteTask(@PathVariable String taskId) {
+    public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
         if(tasksMap.containsKey(taskId)) {
             tasksMap.remove(taskId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

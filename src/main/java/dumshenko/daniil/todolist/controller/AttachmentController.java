@@ -50,7 +50,7 @@ public class AttachmentController {
     }
 
     @DeleteMapping("/{attachmentId}")
-    public ResponseEntity<AttachmentDTO> deleteAttachment(@PathVariable String attachmentId) {
+    public ResponseEntity<Void> deleteAttachment(@PathVariable String attachmentId) {
         if (attachmentMap.containsKey(attachmentId)) {
             attachmentMap.remove(attachmentId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -1,82 +1,80 @@
 package dumshenko.daniil.todolist.controller;
 
+import dumshenko.daniil.todolist.controller.dto.ErrorDto;
 import dumshenko.daniil.todolist.controller.dto.UserDTO;
+import dumshenko.daniil.todolist.exception.UserNotFoundException;
+import dumshenko.daniil.todolist.service.UserService;
+import dumshenko.daniil.todolist.service.domain.User;
+import dumshenko.daniil.todolist.util.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final Map<String, UserDTO> usersMap = new HashMap<>();
+    private final UserService userService;
+    private final UserMapper userMapper;
 
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
-
-        List<UserDTO> userDTOList = new ArrayList<>(usersMap.values());
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userDTOList);
+    @Autowired
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
+        User createdUser = userService.createUser(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
+        UserDTO createdUserDTO = userMapper.toUserDTO(createdUser);
 
-        userDTO.setId(id);
-        userDTO.setUsername(userDTO.getUsername());
-        userDTO.setPassword(userDTO.getPassword());
-        userDTO.setEmail(userDTO.getEmail());
-        userDTO.setCreatedAt(now.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
+    }
 
-        usersMap.put(id, userDTO);
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        List<User> allUsersList = userService.getAllUsers();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        List<UserDTO> userDTOList = allUsersList.stream()
+                .map(userMapper::toUserDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDTOList);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String userId) {
-        UserDTO userDTO = usersMap.get(userId);
-        if (userDTO == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
-    }
+    public ResponseEntity<UserDTO> getUser(@PathVariable String userId) throws UserNotFoundException {
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable String userId) {
-        if(usersMap.containsKey(userId)){
-            usersMap.remove(userId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        User userById = userService.getUserById(userId);
+        UserDTO userDTO = userMapper.toUserDTO(userById);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable String userId, @RequestBody UserDTO userDTO) {
-        Instant now = Instant.now();
+        User user = userMapper.toDomain(userDTO);
+        User updatedUser = userService.updateUser(user, userId);
+        UserDTO updatedUserDTO = userMapper.toUserDTO(updatedUser);
 
-        UserDTO currentUser = usersMap.get(userId);
-        if (currentUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        if(!userDTO.getUsername().equals(currentUser.getUsername())){
-            currentUser.setUsername(userDTO.getUsername());
-        }
-        if(!userDTO.getEmail().equals(currentUser.getEmail())){
-            currentUser.setEmail(userDTO.getEmail());
-        }
-        if(!userDTO.getPassword().equals(currentUser.getPassword())){
-            currentUser.setPassword(userDTO.getPassword());
-        }
-        currentUser.setUpdatedAt(now.toString());
-        usersMap.put(userId, currentUser);
-        return ResponseEntity.status(HttpStatus.OK).body(currentUser);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUserDTO);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) throws UserNotFoundException {
+
+        userService.deleteUser(userId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleUserNotFoundException(UserNotFoundException e) {
+
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 }

@@ -51,7 +51,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> deleteComment(@PathVariable String commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
         if (commentMap.containsKey(commentId)) {
             commentMap.remove(commentId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

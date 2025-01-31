@@ -48,7 +48,7 @@ public class SubtaskController {
     }
 
     @DeleteMapping("/{subtaskId}")
-    public ResponseEntity<SubtaskDTO> deleteSubtask(@PathVariable String subtaskId) {
+    public ResponseEntity<Void> deleteSubtask(@PathVariable String subtaskId) {
         if (subtasksMap.containsKey(subtaskId)) {
             subtasksMap.remove(subtaskId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

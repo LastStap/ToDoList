@@ -48,7 +48,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable String categoryId) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable String categoryId) {
         if(categoriesMap.containsKey(categoryId)) {
             categoriesMap.remove(categoryId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
