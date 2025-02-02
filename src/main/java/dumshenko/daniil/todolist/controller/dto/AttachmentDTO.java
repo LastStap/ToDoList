@@ -12,7 +12,7 @@ public class AttachmentDTO {
     @JsonProperty("file_type")
     private String fileType;
     @JsonProperty("file_size")
-    private String fileSize;
+    private int fileSize;
     @JsonProperty("file_size")
     private String taskId;
     @JsonProperty("uploaded_at")
@@ -21,7 +21,7 @@ public class AttachmentDTO {
     public AttachmentDTO() {
     }
 
-    public AttachmentDTO(String id, String fileName, String filePath, String fileType, String fileSize, String taskId, String uploadedAt) {
+    public AttachmentDTO(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
         this.id = id;
         this.fileName = fileName;
         this.filePath = filePath;
@@ -63,11 +63,11 @@ public class AttachmentDTO {
         this.fileType = fileType;
     }
 
-    public String getFileSize() {
+    public int getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    public void setFileSize(int fileSize) {
         this.fileSize = fileSize;
     }
 

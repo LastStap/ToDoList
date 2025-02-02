@@ -1,0 +1,19 @@
+package dumshenko.daniil.todolist.service;
+
+import dumshenko.daniil.todolist.service.domain.Task;
+
+import java.util.List;
+
+public interface TaskService {
+
+    Task createTask(String title, String description, String status, String priority, String dueDate);
+
+    List<Task> getAllTasks();
+
+    Task getTaskById(String id);
+
+    Task updateTask(String id, Task task);
+
+    void deleteTask(String id);
+
+}
