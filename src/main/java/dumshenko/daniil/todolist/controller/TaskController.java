@@ -2,44 +2,48 @@ package dumshenko.daniil.todolist.controller;
 
 
 import dumshenko.daniil.todolist.controller.dto.TaskDTO;
+import dumshenko.daniil.todolist.service.TaskService;
+import dumshenko.daniil.todolist.service.domain.Task;
+import dumshenko.daniil.todolist.util.mapper.TaskMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final Map<String, TaskDTO> tasksMap = new HashMap<>();
+    private final TaskService taskService;
+    private final TaskMapper taskMapper;
 
-    @GetMapping
-    public ResponseEntity<List<TaskDTO>> getTasks() {
-        List<TaskDTO> tasks = new ArrayList<>(tasksMap.values());
-        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+    @Autowired
+    public TaskController(TaskService taskService, TaskMapper taskMapper) {
+        this.taskService = taskService;
+        this.taskMapper = taskMapper;
     }
 
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
+        Task createdTask = taskService.createTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getStatus(), taskDTO.getPriority(), taskDTO.getDueDate());
+        TaskDTO createdTaskDto = taskMapper.toTaskDto(createdTask);
 
-        taskDTO.setId(id);
-        taskDTO.setTitle(taskDTO.getTitle());
-        taskDTO.setDescription(taskDTO.getDescription());
-        taskDTO.setStatus(taskDTO.getStatus());
-        taskDTO.setPriority(taskDTO.getPriority());
-        taskDTO.setDueDate(taskDTO.getDueDate());
-        taskDTO.setCreatedAt(now.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTaskDto);
+    }
 
-        if(taskDTO.getUserId() != null) {
-            taskDTO.setUserId(null);
-        }
+    @GetMapping
+    public ResponseEntity<List<TaskDTO>> getTasks() {
+        List<Task> allTasksList = taskService.getAllTasks();
 
-        tasksMap.put(id, taskDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskDTO);
+        List<TaskDTO> taskDTOList = allTasksList.stream()
+                .map(taskMapper::toTaskDto)
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(taskDTOList);
     }
 
     @GetMapping("/{taskId}")
