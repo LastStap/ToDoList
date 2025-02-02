@@ -1,22 +1,18 @@
-package dumshenko.daniil.todolist.controller.dto;
+package dumshenko.daniil.todolist.service.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class UserDTO {
+public class User {
 
      private String id;
      private String password;
      private String username;
      private String email;
-    @JsonProperty("created_at")
      private String createdAt;
-    @JsonProperty("updated_at")
      private String updatedAt;
 
-    public UserDTO() {
+    public User() {
     }
 
-    public UserDTO(String username, String email, String createdAt, String updatedAt, String id, String password) {
+    public User(String username, String email, String createdAt, String updatedAt, String id, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
