@@ -1,6 +1,9 @@
 package dumshenko.daniil.todolist.controller;
 
 import dumshenko.daniil.todolist.controller.dto.SubtaskDTO;
+import dumshenko.daniil.todolist.service.SubtaskService;
+import dumshenko.daniil.todolist.util.mapper.SubtaskMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +15,25 @@ import java.util.*;
 @RequestMapping("/subtasks")
 public class SubtaskController {
 
-    private final Map<String, SubtaskDTO> subtasksMap = new HashMap<>();
+    private final SubtaskService subtaskService;
+    private final SubtaskMapper subtaskMapper;
+
+    @Autowired
+    public SubtaskController(SubtaskService subtaskService, SubtaskMapper subtaskMapper) {
+        this.subtaskService = subtaskService;
+        this.subtaskMapper = subtaskMapper;
+    }
+
+    @PostMapping
+    public ResponseEntity<SubtaskDTO> createSubtask(@RequestBody SubtaskDTO subtaskDTO) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(subtaskDTO);
+    }
 
     @GetMapping
     public ResponseEntity<List<SubtaskDTO>> getSubtasks() {
         List<SubtaskDTO> subtaskDTOList = new ArrayList<>(subtasksMap.values());
         return ResponseEntity.status(HttpStatus.OK).body(subtaskDTOList);
-    }
-
-    @PostMapping
-    public ResponseEntity<SubtaskDTO> createSubtask(@RequestBody SubtaskDTO subtaskDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
-
-        subtaskDTO.setId(id);
-        subtaskDTO.setTitle(subtaskDTO.getTitle());
-        subtaskDTO.setStatus(subtaskDTO.getStatus());
-        subtaskDTO.setCreatedAt(now.toString());
-
-        if(subtaskDTO.getTaskId() != null) {
-            subtaskDTO.setTaskId(null);
-        }
-
-        subtasksMap.put(id, subtaskDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(subtaskDTO);
     }
 
     @GetMapping("/{subtaskId}")
@@ -45,15 +43,6 @@ public class SubtaskController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(subtaskDTO);
-    }
-
-    @DeleteMapping("/{subtaskId}")
-    public ResponseEntity<Void> deleteSubtask(@PathVariable String subtaskId) {
-        if (subtasksMap.containsKey(subtaskId)) {
-            subtasksMap.remove(subtaskId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PutMapping("/{subtaskId}")
@@ -74,6 +63,15 @@ public class SubtaskController {
         currentSubtask.setUpdatedAt(now.toString());
         subtasksMap.put(subtaskId, currentSubtask);
         return ResponseEntity.status(HttpStatus.OK).body(currentSubtask);
+    }
+
+    @DeleteMapping("/{subtaskId}")
+    public ResponseEntity<Void> deleteSubtask(@PathVariable String subtaskId) {
+        if (subtasksMap.containsKey(subtaskId)) {
+            subtasksMap.remove(subtaskId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
 

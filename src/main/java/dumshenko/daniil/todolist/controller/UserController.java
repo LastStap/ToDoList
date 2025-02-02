@@ -2,6 +2,7 @@ package dumshenko.daniil.todolist.controller;
 
 import dumshenko.daniil.todolist.controller.dto.ErrorDto;
 import dumshenko.daniil.todolist.controller.dto.UserDTO;
+import dumshenko.daniil.todolist.exception.UserAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.service.UserService;
 import dumshenko.daniil.todolist.service.domain.User;
@@ -29,6 +30,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+
         User createdUser = userService.createUser(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
         UserDTO createdUserDTO = userMapper.toUserDTO(createdUser);
 

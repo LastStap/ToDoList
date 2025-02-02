@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.service;
 
-import dumshenko.daniil.todolist.controller.dto.UserDTO;
+import dumshenko.daniil.todolist.exception.UserAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.service.domain.User;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String username, String password, String email) {
+
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 

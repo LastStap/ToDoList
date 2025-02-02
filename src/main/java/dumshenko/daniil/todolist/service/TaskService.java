@@ -1,5 +1,6 @@
 package dumshenko.daniil.todolist.service;
 
+import dumshenko.daniil.todolist.exception.TaskNotFoundException;
 import dumshenko.daniil.todolist.service.domain.Task;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public interface TaskService {
 
     List<Task> getAllTasks();
 
-    Task getTaskById(String id);
+    Task getTaskById(String id) throws TaskNotFoundException;
 
-    Task updateTask(String id, Task task);
+    Task updateTask(String id, Task task) throws TaskNotFoundException;
 
-    void deleteTask(String id);
+    void deleteTask(String id) throws TaskNotFoundException;
 
 }
