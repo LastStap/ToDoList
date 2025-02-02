@@ -1,6 +1,5 @@
 package dumshenko.daniil.todolist.service;
 
-import dumshenko.daniil.todolist.exception.UserAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.service.domain.User;
 import org.springframework.stereotype.Service;

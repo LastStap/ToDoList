@@ -9,7 +9,8 @@ public class Subtask {
     private String updatedAt;
     private String taskId;
 
-    public Subtask() {}
+    public Subtask() {
+    }
 
     public Subtask(String id, String title, String status, String createdAt, String updatedAt, String taskId) {
         this.id = id;
@@ -70,7 +71,7 @@ public class Subtask {
 
     @Override
     public String toString() {
-        return "SubtaskDTO{" +
+        return "Subtask{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
