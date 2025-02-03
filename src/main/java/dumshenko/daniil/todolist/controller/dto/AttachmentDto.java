@@ -2,7 +2,7 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AttachmentDTO {
+public class AttachmentDto {
 
     private String id;
     @JsonProperty("file_name")
@@ -18,10 +18,10 @@ public class AttachmentDTO {
     @JsonProperty("uploaded_at")
     private String uploadedAt;
 
-    public AttachmentDTO() {
+    public AttachmentDto() {
     }
 
-    public AttachmentDTO(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
+    public AttachmentDto(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
         this.id = id;
         this.fileName = fileName;
         this.filePath = filePath;

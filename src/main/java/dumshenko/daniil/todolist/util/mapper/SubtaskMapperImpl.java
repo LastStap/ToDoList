@@ -1,14 +1,14 @@
 package dumshenko.daniil.todolist.util.mapper;
 
-import dumshenko.daniil.todolist.controller.dto.SubtaskDTO;
+import dumshenko.daniil.todolist.controller.dto.SubtaskDto;
 import dumshenko.daniil.todolist.service.domain.Subtask;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SubtaskMapperImpl implements SubtaskMapper {
     @Override
-    public SubtaskDTO toSubtaskDto(Subtask subtask) {
-        SubtaskDTO subtaskDTO = new SubtaskDTO();
+    public SubtaskDto toSubtaskDto(Subtask subtask) {
+        SubtaskDto subtaskDTO = new SubtaskDto();
         subtaskDTO.setId(subtask.getId());
         subtaskDTO.setTitle(subtask.getTitle());
         subtaskDTO.setStatus(subtask.getStatus());
@@ -17,7 +17,7 @@ public class SubtaskMapperImpl implements SubtaskMapper {
     }
 
     @Override
-    public Subtask toDomain(SubtaskDTO subtaskDTO) {
+    public Subtask toDomain(SubtaskDto subtaskDTO) {
         if (subtaskDTO == null) {
             return null;
         }

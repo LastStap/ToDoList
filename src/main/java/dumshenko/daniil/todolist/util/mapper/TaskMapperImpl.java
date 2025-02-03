@@ -1,14 +1,14 @@
 package dumshenko.daniil.todolist.util.mapper;
 
-import dumshenko.daniil.todolist.controller.dto.TaskDTO;
+import dumshenko.daniil.todolist.controller.dto.TaskDto;
 import dumshenko.daniil.todolist.service.domain.Task;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapperImpl implements TaskMapper {
     @Override
-    public TaskDTO toTaskDto(Task task) {
-        TaskDTO taskDTO = new TaskDTO();
+    public TaskDto toTaskDto(Task task) {
+        TaskDto taskDTO = new TaskDto();
         taskDTO.setId(task.getId());
         taskDTO.setTitle(task.getTitle());
         taskDTO.setDescription(task.getDescription());
@@ -20,7 +20,7 @@ public class TaskMapperImpl implements TaskMapper {
     }
 
     @Override
-    public Task toDomain(TaskDTO taskDTO) {
+    public Task toDomain(TaskDto taskDTO) {
         if (taskDTO == null) {
             return null;
         }

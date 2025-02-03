@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.util.mapper;
 
-import dumshenko.daniil.todolist.controller.dto.UserDTO;
+import dumshenko.daniil.todolist.controller.dto.UserDto;
 import dumshenko.daniil.todolist.service.domain.User;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public UserDTO toUserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
+    public UserDto toUserDTO(User user) {
+        UserDto userDTO = new UserDto();
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
@@ -19,7 +19,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User toDomain(UserDTO userDTO) {
+    public User toDomain(UserDto userDTO) {
         if (userDTO == null) {
             return null;
         }

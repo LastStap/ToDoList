@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.controller;
 
-import dumshenko.daniil.todolist.controller.dto.AttachmentDTO;
+import dumshenko.daniil.todolist.controller.dto.AttachmentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +12,16 @@ import java.util.*;
 @RequestMapping("/attachments")
 public class AttachmentController {
 
-    private final Map<String, AttachmentDTO> attachmentMap = new HashMap<>();
+    private final Map<String, AttachmentDto> attachmentMap = new HashMap<>();
 
     @GetMapping
-    public ResponseEntity<List<AttachmentDTO>> getAttachments() {
-        List<AttachmentDTO> attachments = new ArrayList<>(attachmentMap.values());
+    public ResponseEntity<List<AttachmentDto>> getAttachments() {
+        List<AttachmentDto> attachments = new ArrayList<>(attachmentMap.values());
         return ResponseEntity.status(HttpStatus.OK).body(attachments);
     }
 
     @PostMapping
-    public ResponseEntity<AttachmentDTO> createAttachment(@RequestBody AttachmentDTO attachmentDTO) {
+    public ResponseEntity<AttachmentDto> createAttachment(@RequestBody AttachmentDto attachmentDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
@@ -41,8 +41,8 @@ public class AttachmentController {
     }
 
     @GetMapping("/{attachmentId}")
-    public ResponseEntity<AttachmentDTO> getAttachment(@PathVariable String attachmentId) {
-        AttachmentDTO attachmentDTO = attachmentMap.get(attachmentId);
+    public ResponseEntity<AttachmentDto> getAttachment(@PathVariable String attachmentId) {
+        AttachmentDto attachmentDTO = attachmentMap.get(attachmentId);
         if (attachmentDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

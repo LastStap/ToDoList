@@ -23,13 +23,12 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(description);
         task.setStatus(status);
         task.setPriority(priority);
-        task.setDueDate(task.getDueDate());
+        task.setDueDate(dueDate);
         task.setCreatedAt(now.toString());
 
         if (task.getUserId() != null) {
             task.setUserId(null);
         }
-
         taskMap.put(id, task);
 
         return task;
@@ -74,7 +73,6 @@ public class TaskServiceImpl implements TaskService {
             currentTask.setDueDate(task.getDueDate());
         }
         currentTask.setUpdatedAt(now.toString());
-
         return taskMap.put(taskId, currentTask);
     }
 

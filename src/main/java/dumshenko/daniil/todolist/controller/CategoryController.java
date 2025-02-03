@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.controller;
 
-import dumshenko.daniil.todolist.controller.dto.CategoryDTO;
+import dumshenko.daniil.todolist.controller.dto.CategoryDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import java.util.*;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    private final Map<String, CategoryDTO> categoriesMap = new HashMap<>();
+    private final Map<String, CategoryDto> categoriesMap = new HashMap<>();
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getCategories() {
-        List<CategoryDTO> categoryDTOList = new ArrayList<>(categoriesMap.values());
+    public ResponseEntity<List<CategoryDto>> getCategories() {
+        List<CategoryDto> categoryDtoList = new ArrayList<>(categoriesMap.values());
 
-        return ResponseEntity.status(HttpStatus.OK).body(categoryDTOList);
+        return ResponseEntity.status(HttpStatus.OK).body(categoryDtoList);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDTO) {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
@@ -39,8 +39,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDTO> getCategory(@PathVariable String categoryId) {
-        CategoryDTO categoryDTO = categoriesMap.get(categoryId);
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable String categoryId) {
+        CategoryDto categoryDTO = categoriesMap.get(categoryId);
         if (categoryDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -57,10 +57,10 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable String categoryId, @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable String categoryId, @RequestBody CategoryDto categoryDTO) {
         Instant now = Instant.now();
 
-        CategoryDTO currentCategory = categoriesMap.get(categoryId);
+        CategoryDto currentCategory = categoriesMap.get(categoryId);
 
         if(currentCategory == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

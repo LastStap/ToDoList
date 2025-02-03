@@ -50,7 +50,7 @@ public class SubtaskServiceImpl implements SubtaskService {
         Subtask currentSubtask = subtasksMap.get(subtaskId);
 
         if (currentSubtask == null) {
-            throw new SubtaskNotFoundException("Subtask with id: " + subtaskId + " doesn't exist.");
+            throw new SubtaskNotFoundException("Subtask with subtaskId: " + subtaskId + " doesn't exist.");
         }
         if (!subtask.getTitle().equals(currentSubtask.getTitle())) {
             currentSubtask.setTitle(subtask.getTitle());

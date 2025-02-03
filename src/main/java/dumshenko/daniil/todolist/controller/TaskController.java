@@ -2,9 +2,8 @@ package dumshenko.daniil.todolist.controller;
 
 
 import dumshenko.daniil.todolist.controller.dto.ErrorDto;
-import dumshenko.daniil.todolist.controller.dto.TaskDTO;
+import dumshenko.daniil.todolist.controller.dto.TaskDto;
 import dumshenko.daniil.todolist.exception.TaskNotFoundException;
-import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.service.TaskService;
 import dumshenko.daniil.todolist.service.domain.Task;
 import dumshenko.daniil.todolist.util.mapper.TaskMapper;
@@ -13,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tasks")
@@ -31,38 +28,38 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDTO) {
         Task createdTask = taskService.createTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getStatus(), taskDTO.getPriority(), taskDTO.getDueDate());
-        TaskDTO createdTaskDto = taskMapper.toTaskDto(createdTask);
+        TaskDto createdTaskDto = taskMapper.toTaskDto(createdTask);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTaskDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getTasks() {
+    public ResponseEntity<List<TaskDto>> getTasks() {
         List<Task> allTasksList = taskService.getAllTasks();
 
-        List<TaskDTO> taskDTOList = allTasksList.stream()
+        List<TaskDto> taskDtoList = allTasksList.stream()
                 .map(taskMapper::toTaskDto)
                 .toList();
 
-        return ResponseEntity.status(HttpStatus.OK).body(taskDTOList);
+        return ResponseEntity.status(HttpStatus.OK).body(taskDtoList);
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskDTO> getTask(@PathVariable String taskId) throws TaskNotFoundException {
+    public ResponseEntity<TaskDto> getTask(@PathVariable String taskId) throws TaskNotFoundException {
 
         Task taskById = taskService.getTaskById(taskId);
-        TaskDTO taskDto = taskMapper.toTaskDto(taskById);
+        TaskDto taskDto = taskMapper.toTaskDto(taskById);
 
         return ResponseEntity.status(HttpStatus.OK).body(taskDto);
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<TaskDTO> updateTask(@PathVariable String taskId, @RequestBody TaskDTO taskDTO) throws TaskNotFoundException {
+    public ResponseEntity<TaskDto> updateTask(@PathVariable String taskId, @RequestBody TaskDto taskDTO) throws TaskNotFoundException {
         Task task = taskMapper.toDomain(taskDTO);
         Task updatedTask = taskService.updateTask(taskId, task);
-        TaskDTO updatedTaskDto = taskMapper.toTaskDto(updatedTask);
+        TaskDto updatedTaskDto = taskMapper.toTaskDto(updatedTask);
 
         return ResponseEntity.status(HttpStatus.OK).body(updatedTaskDto);
     }
