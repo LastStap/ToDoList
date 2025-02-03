@@ -1,61 +1,74 @@
 package dumshenko.daniil.todolist.controller;
 
 import dumshenko.daniil.todolist.controller.dto.AttachmentDto;
+import dumshenko.daniil.todolist.controller.dto.ErrorDto;
+import dumshenko.daniil.todolist.exception.AttachmentNotFoundException;
+import dumshenko.daniil.todolist.service.AttachmentService;
+import dumshenko.daniil.todolist.service.TaskService;
+import dumshenko.daniil.todolist.service.domain.Attachment;
+import dumshenko.daniil.todolist.util.mapper.AttachmentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/attachments")
 public class AttachmentController {
 
-    private final Map<String, AttachmentDto> attachmentMap = new HashMap<>();
+    private final AttachmentService attachmentService;
+    private final AttachmentMapper attachmentMapper;
 
-    @GetMapping
-    public ResponseEntity<List<AttachmentDto>> getAttachments() {
-        List<AttachmentDto> attachments = new ArrayList<>(attachmentMap.values());
-        return ResponseEntity.status(HttpStatus.OK).body(attachments);
+    @Autowired
+    public AttachmentController(AttachmentService attachmentService, AttachmentMapper attachmentMapper) {
+        this.attachmentService = attachmentService;
+        this.attachmentMapper = attachmentMapper;
     }
 
     @PostMapping
     public ResponseEntity<AttachmentDto> createAttachment(@RequestBody AttachmentDto attachmentDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
+        Attachment createdAttachment = attachmentService.createAttachment(attachmentDTO.getFileName(), attachmentDTO.getFilePath(), attachmentDTO.getFileType(), attachmentDTO.getFileSize());
+        AttachmentDto createdAttachmentDto = attachmentMapper.toAttachmentDto(createdAttachment);
 
-        attachmentDTO.setId(id);
-        attachmentDTO.setFileName(attachmentDTO.getFileName());
-        attachmentDTO.setFileSize(attachmentDTO.getFileSize());
-        attachmentDTO.setFileType(attachmentDTO.getFileType());
-        attachmentDTO.setFilePath(attachmentDTO.getFilePath());
-        attachmentDTO.setUploadedAt(now.toString());
-
-        if(attachmentDTO.getTaskId() != null) {
-            attachmentDTO.setTaskId(null);
-        }
-
-        attachmentMap.put(id, attachmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(attachmentDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AttachmentDto>> getAttachments() {
+        List<Attachment> allAttachmentsList = attachmentService.getAllAttachments();
+
+        List<AttachmentDto> attachmentDtoList = allAttachmentsList.stream()
+                .map(attachmentMapper::toAttachmentDto)
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(attachmentDtoList);
     }
 
     @GetMapping("/{attachmentId}")
     public ResponseEntity<AttachmentDto> getAttachment(@PathVariable String attachmentId) {
-        AttachmentDto attachmentDTO = attachmentMap.get(attachmentId);
-        if (attachmentDTO == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(attachmentDTO);
+
+        Attachment attachmentBYId = attachmentService.getAttachmentById(attachmentId);
+        AttachmentDto attachmentDto = attachmentMapper.toAttachmentDto(attachmentBYId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(attachmentDto);
     }
 
     @DeleteMapping("/{attachmentId}")
     public ResponseEntity<Void> deleteAttachment(@PathVariable String attachmentId) {
-        if (attachmentMap.containsKey(attachmentId)) {
-            attachmentMap.remove(attachmentId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        attachmentService.deleteAttachment(attachmentId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(AttachmentNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleAttachmentNotFoundException(AttachmentNotFoundException e) {
+
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
 }
