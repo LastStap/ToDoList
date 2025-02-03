@@ -11,10 +11,10 @@ public interface TaskService {
 
     List<Task> getAllTasks();
 
-    Task getTaskById(String id) throws TaskNotFoundException;
+    Task getTaskById(String taskId) throws TaskNotFoundException;
 
-    Task updateTask(String id, Task task) throws TaskNotFoundException;
+    Task updateTask(String taskId, Task task) throws TaskNotFoundException;
 
-    void deleteTask(String id) throws TaskNotFoundException;
+    void deleteTask(String taskId) throws TaskNotFoundException;
 
 }
