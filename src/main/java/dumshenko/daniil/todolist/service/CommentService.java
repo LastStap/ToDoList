@@ -1,12 +1,13 @@
 package dumshenko.daniil.todolist.service;
 
+import dumshenko.daniil.todolist.exception.CommentAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.CommentNotFoundException;
 import dumshenko.daniil.todolist.service.domain.Comment;
 
 import java.util.List;
 
 public interface CommentService {
-    Comment createComment(String content);
+    Comment createComment(String content, String commentId) throws CommentAlreadyExistsException;
 
     List<Comment> getAllComments();
 

@@ -1,6 +1,7 @@
 package dumshenko.daniil.todolist.service;
 
 import dumshenko.daniil.todolist.controller.dto.CommentDto;
+import dumshenko.daniil.todolist.exception.CommentAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.CommentNotFoundException;
 import dumshenko.daniil.todolist.service.domain.Comment;
 import dumshenko.daniil.todolist.service.domain.Task;
@@ -17,9 +18,13 @@ public class CommentServiceImpl implements CommentService {
     private final Map<String, Comment> commentMap = new HashMap<>();
 
     @Override
-    public Comment createComment(String content) {
+    public Comment createComment(String content, String commentId) throws CommentAlreadyExistsException {
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
+
+        if (commentMap.containsKey(id)) {
+            throw new CommentAlreadyExistsException("Comment with commentId: " + commentId + " already exist.");
+        }
 
         Comment comment = new Comment();
         comment.setId(id);
