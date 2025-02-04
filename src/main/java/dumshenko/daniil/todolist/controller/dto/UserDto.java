@@ -2,7 +2,7 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDTO {
+public class UserDto {
 
      private String id;
      private String password;
@@ -13,10 +13,10 @@ public class UserDTO {
     @JsonProperty("updated_at")
      private String updatedAt;
 
-    public UserDTO() {
+    public UserDto() {
     }
 
-    public UserDTO(String username, String email, String createdAt, String updatedAt, String id, String password) {
+    public UserDto(String username, String email, String createdAt, String updatedAt, String id, String password) {
         this.id = id;
         this.username = username;
         this.email = email;

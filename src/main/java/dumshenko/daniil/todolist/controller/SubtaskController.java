@@ -1,79 +1,82 @@
 package dumshenko.daniil.todolist.controller;
 
-import dumshenko.daniil.todolist.controller.dto.SubtaskDTO;
+import dumshenko.daniil.todolist.controller.dto.ErrorDto;
+import dumshenko.daniil.todolist.controller.dto.SubtaskDto;
+import dumshenko.daniil.todolist.exception.SubtaskNotFoundException;
+import dumshenko.daniil.todolist.service.SubtaskService;
+import dumshenko.daniil.todolist.service.domain.Subtask;
+import dumshenko.daniil.todolist.util.mapper.SubtaskMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/subtasks")
 public class SubtaskController {
 
-    private final Map<String, SubtaskDTO> subtasksMap = new HashMap<>();
+    private final SubtaskService subtaskService;
+    private final SubtaskMapper subtaskMapper;
 
-    @GetMapping
-    public ResponseEntity<List<SubtaskDTO>> getSubtasks() {
-        List<SubtaskDTO> subtaskDTOList = new ArrayList<>(subtasksMap.values());
-        return ResponseEntity.status(HttpStatus.OK).body(subtaskDTOList);
+    @Autowired
+    public SubtaskController(SubtaskService subtaskService, SubtaskMapper subtaskMapper) {
+        this.subtaskService = subtaskService;
+        this.subtaskMapper = subtaskMapper;
     }
 
     @PostMapping
-    public ResponseEntity<SubtaskDTO> createSubtask(@RequestBody SubtaskDTO subtaskDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
+    public ResponseEntity<SubtaskDto> createSubtask(@RequestBody SubtaskDto subtaskDTO) {
 
-        subtaskDTO.setId(id);
-        subtaskDTO.setTitle(subtaskDTO.getTitle());
-        subtaskDTO.setStatus(subtaskDTO.getStatus());
-        subtaskDTO.setCreatedAt(now.toString());
+        Subtask createdSubtask = subtaskService.createSubtask(subtaskDTO.getTitle(), subtaskDTO.getStatus());
+        SubtaskDto createdSubtaskDto = subtaskMapper.toSubtaskDto(createdSubtask);
 
-        if(subtaskDTO.getTaskId() != null) {
-            subtaskDTO.setTaskId(null);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSubtaskDto);
+    }
 
-        subtasksMap.put(id, subtaskDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(subtaskDTO);
+    @GetMapping
+    public ResponseEntity<List<SubtaskDto>> getSubtasks() {
+        List<Subtask> allSubtasksList = subtaskService.getAllSubtasks();
+
+        List<SubtaskDto> subtaskDtoList = allSubtasksList.stream()
+                .map(subtaskMapper::toSubtaskDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(subtaskDtoList);
     }
 
     @GetMapping("/{subtaskId}")
-    public ResponseEntity<SubtaskDTO> getSubtask(@PathVariable String subtaskId) {
-        SubtaskDTO subtaskDTO = subtasksMap.get(subtaskId);
-        if (subtaskDTO == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(subtaskDTO);
+    public ResponseEntity<SubtaskDto> getSubtask(@PathVariable String subtaskId) {
+        Subtask subtaskById = subtaskService.getSubtaskById(subtaskId);
+        SubtaskDto subtaskDto = subtaskMapper.toSubtaskDto(subtaskById);
+
+        return ResponseEntity.status(HttpStatus.OK).body(subtaskDto);
+    }
+
+    @PutMapping("/{subtaskId}")
+    public ResponseEntity<SubtaskDto> updateSubtask(@PathVariable String subtaskId, @RequestBody SubtaskDto subtaskDTO) {
+
+        Subtask subtask = subtaskMapper.toDomain(subtaskDTO);
+        Subtask updatedSubtask = subtaskService.updateSubtask(subtaskId, subtask);
+        SubtaskDto updatedSubtaskDto = subtaskMapper.toSubtaskDto(updatedSubtask);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedSubtaskDto);
     }
 
     @DeleteMapping("/{subtaskId}")
     public ResponseEntity<Void> deleteSubtask(@PathVariable String subtaskId) {
-        if (subtasksMap.containsKey(subtaskId)) {
-            subtasksMap.remove(subtaskId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        subtaskService.deleteSubtask(subtaskId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/{subtaskId}")
-    public ResponseEntity<SubtaskDTO> updateSubtask(@PathVariable String subtaskId, @RequestBody SubtaskDTO subtaskDTO) {
-        Instant now = Instant.now();
+    @ExceptionHandler(SubtaskNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleSubtaskNotFoundException(SubtaskNotFoundException e) {
 
-        SubtaskDTO currentSubtask = subtasksMap.get(subtaskId);
-
-        if (currentSubtask == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        if (!subtaskDTO.getTitle().equals(currentSubtask.getTitle())) {
-            currentSubtask.setTitle(subtaskDTO.getTitle());
-        }
-        if (!subtaskDTO.getStatus().equals(currentSubtask.getStatus())) {
-            currentSubtask.setStatus(subtaskDTO.getStatus());
-        }
-        currentSubtask.setUpdatedAt(now.toString());
-        subtasksMap.put(subtaskId, currentSubtask);
-        return ResponseEntity.status(HttpStatus.OK).body(currentSubtask);
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 }
 

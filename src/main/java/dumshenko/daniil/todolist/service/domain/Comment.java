@@ -1,23 +1,17 @@
-package dumshenko.daniil.todolist.controller.dto;
+package dumshenko.daniil.todolist.service.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class CommentDTO {
+public class Comment {
     private String id;
     private String content;
-    @JsonProperty("task_id")
     private String taskId;
-    @JsonProperty("user_id")
     private String userId;
-    @JsonProperty("created_at")
     private String createdAt;
-    @JsonProperty("updated_at")
     private String updatedAt;
 
-    public CommentDTO() {
+    public Comment() {
     }
 
-    public CommentDTO(String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
+    public Comment(String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
         this.id = id;
         this.content = content;
         this.taskId = taskId;

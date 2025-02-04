@@ -1,27 +1,19 @@
-package dumshenko.daniil.todolist.controller.dto;
+package dumshenko.daniil.todolist.service.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class AttachmentDTO {
+public class Attachment {
 
     private String id;
-    @JsonProperty("file_name")
     private String fileName;
-    @JsonProperty("file_path")
     private String filePath;
-    @JsonProperty("file_type")
     private String fileType;
-    @JsonProperty("file_size")
     private int fileSize;
-    @JsonProperty("file_size")
     private String taskId;
-    @JsonProperty("uploaded_at")
     private String uploadedAt;
 
-    public AttachmentDTO() {
+    public Attachment() {
     }
 
-    public AttachmentDTO(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
+    public Attachment(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
         this.id = id;
         this.fileName = fileName;
         this.filePath = filePath;

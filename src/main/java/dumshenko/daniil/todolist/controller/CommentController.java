@@ -1,81 +1,84 @@
 package dumshenko.daniil.todolist.controller;
 
-import dumshenko.daniil.todolist.controller.dto.CommentDTO;
+import dumshenko.daniil.todolist.controller.dto.CommentDto;
+import dumshenko.daniil.todolist.controller.dto.ErrorDto;
+import dumshenko.daniil.todolist.exception.CommentNotFoundException;
+import dumshenko.daniil.todolist.exception.TaskNotFoundException;
+import dumshenko.daniil.todolist.service.CommentService;
+import dumshenko.daniil.todolist.service.domain.Comment;
+import dumshenko.daniil.todolist.util.mapper.CommentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final Map<String, CommentDTO> commentMap = new HashMap<>();
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
-    @GetMapping
-    public ResponseEntity<List<CommentDTO>> getComments() {
-        List<CommentDTO> comments = new ArrayList<>(commentMap.values());
-        return ResponseEntity.status(HttpStatus.OK).body(comments);
+    @Autowired
+    public CommentController(CommentService commentService, CommentMapper commentMapper) {
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     @PostMapping
-    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
+    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDTO) {
 
-        commentDTO.setId(id);
-        commentDTO.setContent(commentDTO.getContent());
-        commentDTO.setCreatedAt(now.toString());
+        Comment createdComment = commentService.createComment(commentDTO.getContent());
+        CommentDto createdCommentDto = commentMapper.toCommentDto(createdComment);
 
-        if(commentDTO.getTaskId() != null) {
-            commentDTO.setTaskId(null);
-        }
-
-        if(commentDTO.getUserId() != null) {
-            commentDTO.setUserId(null);
-        }
-
-        commentMap.put(id, commentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentDTO);
     }
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> getComment(@PathVariable String commentId) {
-        CommentDTO commentDTO = commentMap.get(commentId);
-        if (commentDTO == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(commentDTO);
+    @GetMapping
+    public ResponseEntity<List<CommentDto>> getComments() {
+        List<Comment> allCommentsList = commentService.getAllComments();
+
+        List<CommentDto> commentDtoList = allCommentsList.stream()
+                .map(commentMapper::toCommentDto)
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(commentDtoList);
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
-        if (commentMap.containsKey(commentId)) {
-            commentMap.remove(commentId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentDto> getComment(@PathVariable String commentId) throws CommentNotFoundException {
+
+        Comment commentById = commentService.getCommentById(commentId);
+        CommentDto commentDto = commentMapper.toCommentDto(commentById);
+
+        return ResponseEntity.status(HttpStatus.OK).body(commentDto);
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> updateComment(@PathVariable String commentId, @RequestBody CommentDTO commentDTO) {
-        Instant now = Instant.now();
+    public ResponseEntity<CommentDto> updateComment(@PathVariable String commentId, @RequestBody CommentDto commentDTO) throws CommentNotFoundException {
+        Comment comment = commentMapper.toDomain(commentDTO);
+        Comment updatedComment = commentService.updateComment(comment, commentId);
+        CommentDto updatedCommentDto = commentMapper.toCommentDto(updatedComment);
 
-        CommentDTO currentComment = commentMap.get(commentId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedCommentDto);
+    }
 
-        if (currentComment == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) throws CommentNotFoundException {
 
-        if(!commentDTO.getContent().equals(currentComment.getContent())) {
-            currentComment.setContent(commentDTO.getContent());
-        }
+        commentService.deleteComment(commentId);
 
-        currentComment.setUpdatedAt(now.toString());
-        commentMap.put(commentId, currentComment);
-        return ResponseEntity.status(HttpStatus.OK).body(currentComment);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleCommentNotFoundException(CommentNotFoundException e) {
+
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
 }

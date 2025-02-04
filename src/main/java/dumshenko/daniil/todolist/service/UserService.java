@@ -11,10 +11,10 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(String id) throws UserNotFoundException;
+    User getUserById(String userId) throws UserNotFoundException;
 
     User updateUser(User user, String userId) throws UserNotFoundException;
 
-    void deleteUser(String id) throws UserNotFoundException;
+    void deleteUser(String userId) throws UserNotFoundException;
 
 }

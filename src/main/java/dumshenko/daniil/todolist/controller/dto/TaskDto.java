@@ -2,7 +2,7 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TaskDTO {
+public class TaskDto {
 
     private String id;
     private String title;
@@ -18,10 +18,10 @@ public class TaskDTO {
     @JsonProperty("user_id")
     private String userId;
 
-    public TaskDTO() {
+    public TaskDto() {
     }
 
-    public TaskDTO(String id, String title, String description, String status, String priority, String dueDate, String createdAt, String updatedAt, String userId) {
+    public TaskDto(String id, String title, String description, String status, String priority, String dueDate, String createdAt, String updatedAt, String userId) {
         this.id = id;
         this.title = title;
         this.description = description;

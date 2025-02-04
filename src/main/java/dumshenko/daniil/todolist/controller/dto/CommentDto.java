@@ -2,27 +2,28 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SubtaskDTO {
-
+public class CommentDto {
     private String id;
-    private String title;
-    private String status;
+    private String content;
+    @JsonProperty("task_id")
+    private String taskId;
+    @JsonProperty("user_id")
+    private String userId;
     @JsonProperty("created_at")
     private String createdAt;
     @JsonProperty("updated_at")
     private String updatedAt;
-    @JsonProperty("task_id")
-    private String taskId;
 
-    public SubtaskDTO() {}
+    public CommentDto() {
+    }
 
-    public SubtaskDTO(String id, String title, String status, String createdAt, String updatedAt, String taskId) {
+    public CommentDto(String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
         this.id = id;
-        this.title = title;
-        this.status = status;
+        this.content = content;
+        this.taskId = taskId;
+        this.userId = userId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.taskId = taskId;
     }
 
     public String getId() {
@@ -33,20 +34,28 @@ public class SubtaskDTO {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getContent() {
+        return content;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getCreatedAt() {
@@ -65,23 +74,15 @@ public class SubtaskDTO {
         this.updatedAt = updatedAt;
     }
 
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
     @Override
     public String toString() {
-        return "SubtaskDTO{" +
+        return "CommentDTO{" +
                 "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", status='" + status + '\'' +
+                ", content='" + content + '\'' +
+                ", taskId='" + taskId + '\'' +
+                ", userId='" + userId + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
-                ", taskId='" + taskId + '\'' +
                 '}';
     }
 }
