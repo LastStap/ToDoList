@@ -18,13 +18,9 @@ public class CommentServiceImpl implements CommentService {
     private final Map<String, Comment> commentMap = new HashMap<>();
 
     @Override
-    public Comment createComment(String content, String commentId) throws CommentAlreadyExistsException {
+    public Comment createComment(String content){
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
-
-        if (commentMap.containsKey(id)) {
-            throw new CommentAlreadyExistsException("Comment with commentId: " + commentId + " already exist.");
-        }
 
         Comment comment = new Comment();
         comment.setId(id);
