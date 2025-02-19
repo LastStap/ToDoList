@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,7 +57,7 @@ public class CategoryController {
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable String categoryId, @RequestBody CategoryDto categoryDTO) throws CategoryNotFoundException {
-        Category category = categoryMapper.toDomain(categoryDTO);
+        Category category = categoryMapper.toDomainFromDto(categoryDTO);
         Category updatedCategory = categoryService.updateCategory(categoryId, category);
         CategoryDto updatedCategoryDto = categoryMapper.toCategoryDto(updatedCategory);
 

@@ -1,11 +1,13 @@
 package dumshenko.daniil.todolist.util.mapper;
 
 import dumshenko.daniil.todolist.controller.dto.TaskDto;
+import dumshenko.daniil.todolist.repository.entity.TaskEntity;
 import dumshenko.daniil.todolist.service.domain.Task;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapperImpl implements TaskMapper {
+
     @Override
     public TaskDto toTaskDto(Task task) {
         TaskDto taskDTO = new TaskDto();
@@ -20,7 +22,7 @@ public class TaskMapperImpl implements TaskMapper {
     }
 
     @Override
-    public Task toDomain(TaskDto taskDTO) {
+    public Task toDomainFromDto(TaskDto taskDTO) {
         if (taskDTO == null) {
             return null;
         }
@@ -32,6 +34,20 @@ public class TaskMapperImpl implements TaskMapper {
         task.setPriority(taskDTO.getPriority());
         task.setDueDate(taskDTO.getDueDate());
         task.setCreatedAt(taskDTO.getCreatedAt());
+        return task;
+    }
+
+    @Override
+    public Task toDomainFromEntity(TaskEntity taskEntity) {
+        Task task = new Task();
+
+        task.setId(taskEntity.getId().toString());
+        task.setTitle(taskEntity.getTitle());
+        task.setDescription(taskEntity.getDescription());
+        task.setStatus(taskEntity.getStatus());
+        task.setPriority(taskEntity.getPriority());
+        task.setDueDate(taskEntity.getDueDate());
+        task.setCreatedAt(taskEntity.getCreatedAt());
         return task;
     }
 }

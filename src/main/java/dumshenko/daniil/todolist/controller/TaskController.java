@@ -57,7 +57,7 @@ public class TaskController {
 
     @PutMapping("/{taskId}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable String taskId, @RequestBody TaskDto taskDTO) throws TaskNotFoundException {
-        Task task = taskMapper.toDomain(taskDTO);
+        Task task = taskMapper.toDomainFromDto(taskDTO);
         Task updatedTask = taskService.updateTask(taskId, task);
         TaskDto updatedTaskDto = taskMapper.toTaskDto(updatedTask);
 

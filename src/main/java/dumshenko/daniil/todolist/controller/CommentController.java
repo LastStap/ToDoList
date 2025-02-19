@@ -3,7 +3,6 @@ package dumshenko.daniil.todolist.controller;
 import dumshenko.daniil.todolist.controller.dto.CommentDto;
 import dumshenko.daniil.todolist.controller.dto.ErrorDto;
 import dumshenko.daniil.todolist.exception.CommentNotFoundException;
-import dumshenko.daniil.todolist.exception.TaskNotFoundException;
 import dumshenko.daniil.todolist.service.CommentService;
 import dumshenko.daniil.todolist.service.domain.Comment;
 import dumshenko.daniil.todolist.util.mapper.CommentMapper;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/comments")
@@ -60,7 +57,7 @@ public class CommentController {
 
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable String commentId, @RequestBody CommentDto commentDTO) throws CommentNotFoundException {
-        Comment comment = commentMapper.toDomain(commentDTO);
+        Comment comment = commentMapper.toDomainFromDto(commentDTO);
         Comment updatedComment = commentService.updateComment(comment, commentId);
         CommentDto updatedCommentDto = commentMapper.toCommentDto(updatedComment);
 

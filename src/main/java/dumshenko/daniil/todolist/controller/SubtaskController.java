@@ -58,7 +58,7 @@ public class SubtaskController {
     @PutMapping("/{subtaskId}")
     public ResponseEntity<SubtaskDto> updateSubtask(@PathVariable String subtaskId, @RequestBody SubtaskDto subtaskDTO) {
 
-        Subtask subtask = subtaskMapper.toDomain(subtaskDTO);
+        Subtask subtask = subtaskMapper.toDomainFromDto(subtaskDTO);
         Subtask updatedSubtask = subtaskService.updateSubtask(subtaskId, subtask);
         SubtaskDto updatedSubtaskDto = subtaskMapper.toSubtaskDto(updatedSubtask);
 

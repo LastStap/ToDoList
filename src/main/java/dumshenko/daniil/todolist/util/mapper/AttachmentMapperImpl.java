@@ -1,6 +1,7 @@
 package dumshenko.daniil.todolist.util.mapper;
 
 import dumshenko.daniil.todolist.controller.dto.AttachmentDto;
+import dumshenko.daniil.todolist.repository.entity.AttachmentEntity;
 import dumshenko.daniil.todolist.service.domain.Attachment;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class AttachmentMapperImpl implements AttachmentMapper {
     }
 
     @Override
-    public Attachment toDomain(AttachmentDto attachmentDto) {
+    public Attachment toDomainFromDto(AttachmentDto attachmentDto) {
         if (attachmentDto == null) {
             return null;
         }
@@ -28,6 +29,18 @@ public class AttachmentMapperImpl implements AttachmentMapper {
         attachment.setFilePath(attachmentDto.getFilePath());
         attachment.setFileType(attachmentDto.getFileType());
         attachment.setFileSize(attachmentDto.getFileSize());
+        return attachment;
+    }
+
+    @Override
+    public Attachment toDomainFromEntity(AttachmentEntity attachmentEntity) {
+        Attachment attachment = new Attachment();
+
+        attachment.setId(attachmentEntity.getId().toString());
+        attachment.setFileName(attachmentEntity.getFilePath());
+        attachment.setFilePath(attachmentEntity.getFilePath());
+        attachment.setFileType(attachmentEntity.getFileType());
+        attachment.setFileSize(attachmentEntity.getFileSize());
         return attachment;
     }
 }
