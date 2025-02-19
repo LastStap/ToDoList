@@ -4,22 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+import java.util.UUID;
+
 @Setter
 @Getter
 public class User {
 
-     private String id;
-    @JsonIgnore
+     private UUID id;
      private String password;
      private String username;
      private String email;
-     private String createdAt;
-     private String updatedAt;
+     private Instant createdAt;
+     private Instant updatedAt;
 
     public User() {
     }
 
-    public User(String id, String password, String username, String email, String createdAt, String updatedAt) {
+    public User(UUID id, String password, String username, String email, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.password = password;
         this.username = username;

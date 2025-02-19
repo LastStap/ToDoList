@@ -1,24 +1,29 @@
 package dumshenko.daniil.todolist.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.Instant;
+import java.util.UUID;
+
+@Setter
+@Getter
 public class UserDto {
 
-    private String id;
-    @JsonIgnore
+    private UUID id;
     private String password;
     private String username;
     private String email;
     @JsonProperty("created_at")
-    private String createdAt;
+    private Instant createdAt;
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private Instant updatedAt;
 
     public UserDto() {
     }
 
-    public UserDto(String username, String email, String createdAt, String updatedAt, String id, String password) {
+    public UserDto(String username, String email, Instant createdAt, Instant updatedAt, UUID id, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -27,53 +32,6 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     @Override
     public String toString() {

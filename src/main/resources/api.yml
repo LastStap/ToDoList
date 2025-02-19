@@ -600,6 +600,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
 
         username:
           type: string
@@ -609,9 +610,13 @@ components:
 
         created_at:
           type: string
+          format: date-time
+          default: now()
 
         updated_at:
           type: string
+          format: date-time
+          default: now()
 
     UserInput:
       type: object
@@ -724,6 +729,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
 
         name:
           type: string
@@ -733,6 +739,7 @@ components:
 
         user_id:
           type: string
+          format: uuid
 
     CategoryInput:
       type: object
@@ -748,6 +755,7 @@ components:
 
         user_id:
           type: string
+          format: uuid
 
     Subtask:
       type: object
@@ -875,6 +883,7 @@ components:
         uploaded_at:
           type: string
           format: date-time
+          default: now()
           description: The timestamp when the file was uploaded.
 
     AttachmentInput:

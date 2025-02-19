@@ -28,20 +28,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String username, String password, String email) {
-
-        String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
 
-        User user = new User();
-        user.setId(id);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setCreatedAt(now.toString());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setPassword(password);
+        userEntity.setEmail(email);
+        userEntity.setCreatedAt(now);
+        userEntity.setUpdatedAt(now);
 
-        usersMap.put(id, user);
+        UserEntity savedUser = userRepository.save(userEntity);
 
-        return user;
+        return userMapper.toDomainFromEntity(savedUser);
     }
 
     @Override
@@ -56,9 +54,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(String userId) {
+    public User getUserById(UUID userId) {
 
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(UUID.fromString(userId));
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(userId);
 
         if (optionalUserEntity.isPresent()) {
             return userMapper.toDomainFromEntity(optionalUserEntity.get());
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user, String userId) throws UserNotFoundException {
+    public User updateUser(User user, UUID userId) throws UserNotFoundException {
         Instant now = Instant.now();
         User currentUser = usersMap.get(userId);
 
@@ -83,13 +81,13 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(currentUser.getPassword())) {
             currentUser.setPassword(user.getPassword());
         }
-        currentUser.setUpdatedAt(now.toString());
+        currentUser.setUpdatedAt(now);
 
-        return usersMap.put(userId, currentUser);
+        return usersMap.put(String.valueOf(userId), currentUser);
     }
 
     @Override
-    public void deleteUser(String userId) {
+    public void deleteUser(UUID userId) {
         if(usersMap.containsKey(userId)) {
             usersMap.remove(userId);
         } else {

@@ -4,6 +4,7 @@ import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.service.domain.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -11,10 +12,10 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(String userId) throws UserNotFoundException;
+    User getUserById(UUID userId) throws UserNotFoundException;
 
-    User updateUser(User user, String userId) throws UserNotFoundException;
+    User updateUser(User user, UUID userId) throws UserNotFoundException;
 
-    void deleteUser(String userId) throws UserNotFoundException;
+    void deleteUser(UUID userId) throws UserNotFoundException;
 
 }

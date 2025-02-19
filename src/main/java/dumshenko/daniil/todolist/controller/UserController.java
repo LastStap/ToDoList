@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable String userId) throws UserNotFoundException {
+    public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) throws UserNotFoundException {
 
         User userById = userService.getUserById(userId);
         UserDto userDTO = userMapper.toUserDTO(userById);
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable String userId, @RequestBody UserDto userDTO) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UserDto userDTO) {
         User user = userMapper.toDomainFromDto(userDTO);
         User updatedUser = userService.updateUser(user, userId);
         UserDto updatedUserDto = userMapper.toUserDTO(updatedUser);
@@ -66,7 +67,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) throws UserNotFoundException {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) throws UserNotFoundException {
 
         userService.deleteUser(userId);
 

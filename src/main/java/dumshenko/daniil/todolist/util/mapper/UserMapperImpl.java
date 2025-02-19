@@ -5,6 +5,8 @@ import dumshenko.daniil.todolist.repository.entity.UserEntity;
 import dumshenko.daniil.todolist.service.domain.User;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 @Component
 public class UserMapperImpl implements UserMapper {
 
@@ -16,6 +18,7 @@ public class UserMapperImpl implements UserMapper {
         userDTO.setPassword(user.getPassword());
         userDTO.setEmail(user.getEmail());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setUpdatedAt(user.getUpdatedAt());
         return userDTO;
     }
 
@@ -30,6 +33,7 @@ public class UserMapperImpl implements UserMapper {
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
         user.setCreatedAt(userDTO.getCreatedAt());
+        user.setUpdatedAt(userDTO.getUpdatedAt());
         return user;
     }
 
@@ -37,11 +41,12 @@ public class UserMapperImpl implements UserMapper {
     public User toDomainFromEntity(UserEntity userEntity) {
         User user = new User();
 
-        user.setId(userEntity.getId().toString());
+        user.setId(userEntity.getId());
         user.setUsername(userEntity.getUsername());
         user.setPassword(userEntity.getPassword());
         user.setEmail(userEntity.getEmail());
         user.setCreatedAt(userEntity.getCreatedAt());
+        user.setUpdatedAt(userEntity.getUpdatedAt());
         return user;
     }
 }
