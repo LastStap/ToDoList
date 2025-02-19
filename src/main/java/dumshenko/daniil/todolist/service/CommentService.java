@@ -7,7 +7,7 @@ import dumshenko.daniil.todolist.service.domain.Comment;
 import java.util.List;
 
 public interface CommentService {
-    Comment createComment(String content, String commentId) throws CommentAlreadyExistsException;
+    Comment createComment(String content);
 
     List<Comment> getAllComments();
 
