@@ -889,3 +889,12 @@ components:
           type: string
           format: binary
           description: The file to be uploaded.
+    Error:
+      type: object
+      required:
+        - message
+
+      properties:
+        message:
+          type: string
+          readOnly: true

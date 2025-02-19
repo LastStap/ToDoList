@@ -1,7 +1,10 @@
 package dumshenko.daniil.todolist.service;
 
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
+import dumshenko.daniil.todolist.repository.UserRepository;
+import dumshenko.daniil.todolist.repository.entity.UserEntity;
 import dumshenko.daniil.todolist.service.domain.User;
+import dumshenko.daniil.todolist.util.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -10,7 +13,15 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final Map<String, User> usersMap = new HashMap<>();
+    private final UserRepository userRepository;
+    private final Map<String, User> usersMap;
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.usersMap = new HashMap<>();
+        this.userMapper = userMapper;
+    }
 
     @Override
     public User createUser(String username, String password, String email) {
@@ -37,12 +48,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String userId) {
-        User user = usersMap.get(userId);
 
-        if (user == null) {
-            throw new UserNotFoundException("Person with id: " + userId + " doesn't exist.");
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(UUID.fromString(userId));
+
+        if (optionalUserEntity.isPresent()) {
+            return userMapper.toDomainFromEntity(optionalUserEntity.get());
         }
-        return user;
+        throw new UserNotFoundException("User with id: " + userId + " doesn't exist.");
     }
 
     @Override
@@ -51,7 +63,7 @@ public class UserServiceImpl implements UserService {
         User currentUser = usersMap.get(userId);
 
         if (user == null) {
-            throw new UserNotFoundException("Person with id: " + userId + " doesn't exist.");
+            throw new UserNotFoundException("User with id: " + userId + " doesn't exist.");
         }
         if (!user.getUsername().equals(currentUser.getUsername())) {
             currentUser.setUsername(user.getUsername());
@@ -72,7 +84,7 @@ public class UserServiceImpl implements UserService {
         if(usersMap.containsKey(userId)) {
             usersMap.remove(userId);
         } else {
-            throw new UserNotFoundException("Person with id: " + userId + " doesn't exist.");
+            throw new UserNotFoundException("User with id: " + userId + " doesn't exist.");
         }
     }
 }

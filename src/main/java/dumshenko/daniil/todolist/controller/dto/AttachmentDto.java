@@ -13,7 +13,7 @@ public class AttachmentDto {
     private String fileType;
     @JsonProperty("file_size")
     private int fileSize;
-    @JsonProperty("file_size")
+    @JsonProperty("task_id")
     private String taskId;
     @JsonProperty("uploaded_at")
     private String uploadedAt;
