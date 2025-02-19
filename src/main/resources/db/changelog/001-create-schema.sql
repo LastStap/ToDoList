@@ -1,5 +1,4 @@
 --liquibase formatted sql
-
 --changeset daniil.dumshenko:1
 
 CREATE TABLE Users (

@@ -1,5 +1,6 @@
 package dumshenko.daniil.todolist.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class UserEntity {
     private String email;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "created_at")

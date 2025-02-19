@@ -5,10 +5,12 @@ import dumshenko.daniil.todolist.repository.UserRepository;
 import dumshenko.daniil.todolist.repository.entity.UserEntity;
 import dumshenko.daniil.todolist.service.domain.User;
 import dumshenko.daniil.todolist.util.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private final Map<String, User> usersMap;
     private final UserMapper userMapper;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.usersMap = new HashMap<>();
@@ -43,7 +46,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return new ArrayList<>(usersMap.values());
+        List<User> userList = new ArrayList<>();
+
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toDomainFromEntity)
+                .collect(Collectors.toList());
+
     }
 
     @Override

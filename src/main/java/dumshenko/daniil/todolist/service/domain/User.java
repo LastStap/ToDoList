@@ -1,5 +1,6 @@
 package dumshenko.daniil.todolist.service.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import lombok.Setter;
 public class User {
 
      private String id;
+    @JsonIgnore
      private String password;
      private String username;
      private String email;

@@ -1,5 +1,4 @@
 --liquibase formatted sql
-
 --changeset daniil.dumshenko:2
 
 insert into users (id, username, email, password, created_at, updated_at) values ('4542d77c-e970-4c99-9c97-76eb0dd07969', 'okroch0', 'lgalvan0@cloudflare.com', '$2a$04$ts.5mJGxqup5GQHEs5OUqurWM.rS9iFWABZx8gnvxKuFhP4Fd2b8q', '2025-01-06T15:54:32Z', '2024-07-31T08:06:43Z');

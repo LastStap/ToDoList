@@ -1,17 +1,19 @@
 package dumshenko.daniil.todolist.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDto {
 
-     private String id;
-     private String password;
-     private String username;
-     private String email;
+    private String id;
+    @JsonIgnore
+    private String password;
+    private String username;
+    private String email;
     @JsonProperty("created_at")
-     private String createdAt;
+    private String createdAt;
     @JsonProperty("updated_at")
-     private String updatedAt;
+    private String updatedAt;
 
     public UserDto() {
     }
@@ -75,13 +77,6 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", created_at='" + createdAt + '\'' +
-                ", updated_at='" + updatedAt + '\'' +
-                '}';
+        return "UserDTO{" + "id='" + id + '\'' + ", username='" + username + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", created_at='" + createdAt + '\'' + ", updated_at='" + updatedAt + '\'' + '}';
     }
 }
