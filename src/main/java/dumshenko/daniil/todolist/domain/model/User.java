@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.UUID;
 import lombok.Data;
 
-@Data
 public class User {
 
   private UUID id;
@@ -16,13 +15,7 @@ public class User {
 
   public User() {}
 
-  public User(
-      UUID id,
-      String password,
-      String username,
-      String email,
-      Instant createdAt,
-      Instant updatedAt) {
+  public User(UUID id, String password, String username, String email, Instant createdAt, Instant updatedAt) {
     this.id = id;
     this.password = password;
     this.username = username;
@@ -53,5 +46,53 @@ public class User {
         + updatedAt
         + '\''
         + '}';
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Instant updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

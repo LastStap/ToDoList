@@ -9,29 +9,14 @@ import org.springframework.stereotype.Component;
 public class CommentMapper {
 
   public CommentDto toCommentDto(Comment comment) {
-    CommentDto commentDto = new CommentDto();
-
-    commentDto.setId(comment.getId());
-    commentDto.setContent(comment.getContent());
-    commentDto.setCreatedAt(comment.getCreatedAt());
-    return commentDto;
+    return null;
   }
 
   public Comment toDomainFromDto(CommentDto commentDto) {
-    Comment comment = new Comment();
-
-    comment.setId(commentDto.getId());
-    comment.setContent(commentDto.getContent());
-    comment.setCreatedAt(commentDto.getCreatedAt());
-    return comment;
+    return null;
   }
 
   public Comment toDomainFromEntity(CommentEntity commentEntity) {
-    Comment comment = new Comment();
-
-    comment.setId(commentEntity.getId().toString());
-    comment.setContent(commentEntity.getContent());
-    comment.setCreatedAt(commentEntity.getCreatedAt());
-    return comment;
+    return null;
   }
 }

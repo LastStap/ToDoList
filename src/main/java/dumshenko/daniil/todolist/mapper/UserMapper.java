@@ -9,47 +9,59 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserDto toDto(User user) {
-        return new UserDto(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getEmail(),
-                user.getCreatedAt(),
-                user.getUpdatedAt());
+  public UserDto toDto(User user) {
+    return new UserDto(
+        user.getId(),
+        user.getUsername(),
+        user.getPassword(),
+        user.getEmail(),
+        user.getCreatedAt(),
+        user.getUpdatedAt());
+  }
+
+  public User toDomain(UserDto userDto) {
+    UUID userId;
+    if (userDto.getId() != null) {
+      userId = userDto.getId();
+    } else{
+      userId = null;
     }
+    return new User(
+        userId,
+        userDto.getUsername(),
+        userDto.getPassword(),
+        userDto.getEmail(),
+        userDto.getCreatedAt(),
+        userDto.getUpdatedAt());
+  }
 
+  public User toDomain(UUID userId, UserDto userDto) {
+    return new User(
+        userDto.getId(),
+        userDto.getUsername(),
+        userDto.getPassword(),
+        userDto.getEmail(),
+        userDto.getCreatedAt(),
+        userDto.getUpdatedAt());
+  }
 
-    public User toDomain(UserDto userDto) {
-        return new User(
-                userDto.getId(),
-                userDto.getUsername(),
-                userDto.getPassword(),
-                userDto.getEmail(),
-                userDto.getCreatedAt(),
-                userDto.getUpdatedAt());
-    }
+  public User toDomain(UserEntity userEntity) {
+    return new User(
+        userEntity.getId(),
+        userEntity.getUsername(),
+        userEntity.getPassword(),
+        userEntity.getEmail(),
+        userEntity.getCreatedAt(),
+        userEntity.getUpdatedAt());
+  }
 
-    public User toDomain(UUID userId , UserDto userDto) {
-        return new User(
-                userDto.getId(),
-                userDto.getUsername(),
-                userDto.getPassword(),
-                userDto.getEmail(),
-                userDto.getCreatedAt(),
-                userDto.getUpdatedAt());
-    }
-
-    public User toDomain(UserEntity userEntity) {
-        User user = new User();
-
-        user.setId(userEntity.getId());
-        user.setUsername(userEntity.getUsername());
-        user.setPassword(userEntity.getPassword());
-        user.setEmail(userEntity.getEmail());
-        user.setCreatedAt(userEntity.getCreatedAt());
-        user.setUpdatedAt(userEntity.getUpdatedAt());
-        return user;
-    }
-
+  public UserEntity toEntity(User user) {
+    return new UserEntity(
+            user.getId(),
+            user.getUsername(),
+            user.getPassword(),
+            user.getEmail(),
+            user.getCreatedAt(),
+            user.getUpdatedAt());
+  }
 }

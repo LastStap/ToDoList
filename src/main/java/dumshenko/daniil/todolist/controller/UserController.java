@@ -80,7 +80,7 @@ public class UserController {
 
   @ExceptionHandler(UserNotFoundException.class)
   public ResponseEntity<ErrorDto> handleUserNotFoundException(UserNotFoundException e) {
-
-    return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
+    ErrorDto errorDto = new ErrorDto(e.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDto);
   }
 }

@@ -9,34 +9,16 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
 
   public CategoryDto toCategoryDto(Category category) {
-    CategoryDto categoryDto = new CategoryDto();
-
-    categoryDto.setId(category.getId());
-    categoryDto.setName(category.getName());
-    categoryDto.setDescription(category.getDescription());
-    return categoryDto;
+return null;
   }
 
 
   public Category toDomainFromDto(CategoryDto categoryDto) {
-    if (categoryDto == null) {
-      return null;
-    }
-
-    Category category = new Category();
-    category.setId(categoryDto.getId());
-    category.setName(categoryDto.getName());
-    category.setDescription(categoryDto.getDescription());
-    return category;
+    return null;
   }
 
 
   public Category toDomainFromEntity(CategoryEntity categoryEntity) {
-    Category category = new Category();
-
-    category.setId(categoryEntity.getId().toString());
-    category.setName(categoryEntity.getName());
-    category.setDescription(categoryEntity.getDescription());
-    return category;
+    return null;
   }
 }

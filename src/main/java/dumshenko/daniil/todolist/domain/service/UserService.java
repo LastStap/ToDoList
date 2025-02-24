@@ -1,8 +1,8 @@
 package dumshenko.daniil.todolist.domain.service;
 
-import dumshenko.daniil.todolist.mapper.UserMapper;
 import dumshenko.daniil.todolist.domain.model.User;
-
+import dumshenko.daniil.todolist.domain.repository.UserRepository;
+import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,30 +10,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-  private final UserMapper userMapper;
+  private final UserRepository userRepository;
 
   @Autowired
-  public UserService(UserMapper userMapper) {
-    this.userMapper = userMapper;
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
   }
 
   public User createUser(User user) {
-    return null;
+    return userRepository.save(user);
   }
 
   public List<User> getAllUsers() {
-    return null;
+    return userRepository.findAll();
   }
 
   public User getUserById(UUID userId) {
-    return null;
+    Optional<User> user = userRepository.findById(userId);
+
+    return user.orElseThrow(() -> new UserNotFoundException(userId));
   }
 
-  public User updateUser(User user){
-    return null;
+  public User updateUser(User user) {
+    UUID userId = user.getId();
+
+    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+    return userRepository.save(user);
   }
 
   public void deleteUser(UUID userId) {
+    User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
+    userRepository.delete(user);
   }
 }
