@@ -1,25 +1,17 @@
-package dumshenko.daniil.todolist.controller.dto;
+package dumshenko.daniil.todolist.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class SubtaskDto {
+public class Subtask {
 
   private String id;
   private String title;
   private String status;
-
-  @JsonProperty("created_at")
   private String createdAt;
-
-  @JsonProperty("updated_at")
   private String updatedAt;
-
-  @JsonProperty("task_id")
   private String taskId;
 
-  public SubtaskDto() {}
+  public Subtask() {}
 
-  public SubtaskDto(
+  public Subtask(
       String id, String title, String status, String createdAt, String updatedAt, String taskId) {
     this.id = id;
     this.title = title;
@@ -79,7 +71,7 @@ public class SubtaskDto {
 
   @Override
   public String toString() {
-    return "SubtaskDTO{"
+    return "Subtask{"
         + "id='"
         + id
         + '\''

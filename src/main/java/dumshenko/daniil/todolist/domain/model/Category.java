@@ -1,18 +1,14 @@
-package dumshenko.daniil.todolist.controller.dto;
+package dumshenko.daniil.todolist.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class CategoryDto {
+public class Category {
   private String id;
   private String name;
   private String description;
-
-  @JsonProperty("user_id")
   private String userId;
 
-  public CategoryDto() {}
+  public Category() {}
 
-  public CategoryDto(String id, String name, String description, String userId) {
+  public Category(String id, String name, String description, String userId) {
     this.id = id;
     this.name = name;
     this.description = description;

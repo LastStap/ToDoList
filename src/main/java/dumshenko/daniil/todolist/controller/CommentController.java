@@ -3,79 +3,56 @@ package dumshenko.daniil.todolist.controller;
 import dumshenko.daniil.todolist.controller.dto.CommentDto;
 import dumshenko.daniil.todolist.controller.dto.ErrorDto;
 import dumshenko.daniil.todolist.exception.CommentNotFoundException;
-import dumshenko.daniil.todolist.service.CommentService;
-import dumshenko.daniil.todolist.service.domain.Comment;
-import dumshenko.daniil.todolist.util.mapper.CommentMapper;
+import dumshenko.daniil.todolist.domain.model.Comment;
+
+import java.util.*;
+
+import dumshenko.daniil.todolist.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final CommentService commentService;
-    private final CommentMapper commentMapper;
+  private final CommentMapper commentMapper;
 
-    @Autowired
-    public CommentController(CommentService commentService, CommentMapper commentMapper) {
-        this.commentService = commentService;
-        this.commentMapper = commentMapper;
-    }
+  @Autowired
+  public CommentController(CommentMapper commentMapper) {
 
-    @PostMapping
-    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDTO) {
+    this.commentMapper = commentMapper;
+  }
 
-        Comment createdComment = commentService.createComment(commentDTO.getContent());
-        CommentDto createdCommentDto = commentMapper.toCommentDto(createdComment);
+  @PostMapping
+  public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDTO) {
+    return null;
+  }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(commentDTO);
-    }
+  @GetMapping
+  public ResponseEntity<List<CommentDto>> getComments() {
+    return null;
+  }
 
-    @GetMapping
-    public ResponseEntity<List<CommentDto>> getComments() {
-        List<Comment> allCommentsList = commentService.getAllComments();
+  @GetMapping("/{commentId}")
+  public ResponseEntity<CommentDto> getComment(@PathVariable String commentId){
+return null;
+  }
 
-        List<CommentDto> commentDtoList = allCommentsList.stream()
-                .map(commentMapper::toCommentDto)
-                .toList();
+  @PutMapping("/{commentId}")
+  public ResponseEntity<CommentDto> updateComment(@PathVariable String commentId, @RequestBody CommentDto commentDTO){
+return null;
+  }
 
-        return ResponseEntity.status(HttpStatus.OK).body(commentDtoList);
-    }
+  @DeleteMapping("/{commentId}")
+  public ResponseEntity<Void> deleteComment(@PathVariable String commentId){
+return null;
+  }
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<CommentDto> getComment(@PathVariable String commentId) throws CommentNotFoundException {
+  @ExceptionHandler(CommentNotFoundException.class)
+  public ResponseEntity<ErrorDto> handleCommentNotFoundException(CommentNotFoundException e) {
 
-        Comment commentById = commentService.getCommentById(commentId);
-        CommentDto commentDto = commentMapper.toCommentDto(commentById);
-
-        return ResponseEntity.status(HttpStatus.OK).body(commentDto);
-    }
-
-    @PutMapping("/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable String commentId, @RequestBody CommentDto commentDTO) throws CommentNotFoundException {
-        Comment comment = commentMapper.toDomainFromDto(commentDTO);
-        Comment updatedComment = commentService.updateComment(comment, commentId);
-        CommentDto updatedCommentDto = commentMapper.toCommentDto(updatedComment);
-
-        return ResponseEntity.status(HttpStatus.OK).body(updatedCommentDto);
-    }
-
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) throws CommentNotFoundException {
-
-        commentService.deleteComment(commentId);
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @ExceptionHandler(CommentNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleCommentNotFoundException(CommentNotFoundException e) {
-
-        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
-    }
-
+    return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
+  }
 }

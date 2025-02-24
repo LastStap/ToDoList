@@ -4,99 +4,69 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AttachmentDto {
 
-    private String id;
-    @JsonProperty("file_name")
-    private String fileName;
-    @JsonProperty("file_path")
-    private String filePath;
-    @JsonProperty("file_type")
-    private String fileType;
-    @JsonProperty("file_size")
-    private int fileSize;
-    @JsonProperty("task_id")
-    private String taskId;
-    @JsonProperty("uploaded_at")
-    private String uploadedAt;
+  private String id;
 
-    public AttachmentDto() {
-    }
+  @JsonProperty("file_name")
+  private String fileName;
 
-    public AttachmentDto(String id, String fileName, String filePath, String fileType, int fileSize, String taskId, String uploadedAt) {
-        this.id = id;
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.fileType = fileType;
-        this.fileSize = fileSize;
-        this.taskId = taskId;
-        this.uploadedAt = uploadedAt;
-    }
+  @JsonProperty("file_path")
+  private String filePath;
 
-    public String getId() {
-        return id;
-    }
+  @JsonProperty("file_type")
+  private String fileType;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @JsonProperty("file_size")
+  private int fileSize;
 
-    public String getFileName() {
-        return fileName;
-    }
+  @JsonProperty("task_id")
+  private String taskId;
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+  @JsonProperty("uploaded_at")
+  private String uploadedAt;
 
-    public String getFilePath() {
-        return filePath;
-    }
+  public AttachmentDto() {}
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
+  public AttachmentDto(
+      String id,
+      String fileName,
+      String filePath,
+      String fileType,
+      int fileSize,
+      String taskId,
+      String uploadedAt) {
+    this.id = id;
+    this.fileName = fileName;
+    this.filePath = filePath;
+    this.fileType = fileType;
+    this.fileSize = fileSize;
+    this.taskId = taskId;
+    this.uploadedAt = uploadedAt;
+  }
 
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
-
-    public int getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getUploadedAt() {
-        return uploadedAt;
-    }
-
-    public void setUploadedAt(String uploadedAt) {
-        this.uploadedAt = uploadedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "AttachmentDTO{" +
-                "id='" + id + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", filePath='" + filePath + '\'' +
-                ", fileType='" + fileType + '\'' +
-                ", fileSize='" + fileSize + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", uploadedAt='" + uploadedAt + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "AttachmentDTO{"
+        + "id='"
+        + id
+        + '\''
+        + ", fileName='"
+        + fileName
+        + '\''
+        + ", filePath='"
+        + filePath
+        + '\''
+        + ", fileType='"
+        + fileType
+        + '\''
+        + ", fileSize='"
+        + fileSize
+        + '\''
+        + ", taskId='"
+        + taskId
+        + '\''
+        + ", uploadedAt='"
+        + uploadedAt
+        + '\''
+        + '}';
+  }
 }
