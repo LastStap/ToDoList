@@ -48,6 +48,13 @@ public class User {
         + '}';
   }
 
+  public void update(User user) {
+    this.username = user.getUsername();
+    this.password = user.getPassword();
+    this.email = user.getEmail();
+    this.updatedAt = Instant.now();
+  }
+
   public UUID getId() {
     return id;
   }

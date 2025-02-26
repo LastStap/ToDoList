@@ -37,12 +37,12 @@ public class UserService {
     return user.orElseThrow(() -> new UserNotFoundException(userId));
   }
 
-  public User updateUser(User user) {
-    UUID userId = user.getId();
+  public User updateUser(UUID userId, User userToUpdateForm) {
+    User user = getUserById(userId);
     user.setUpdatedAt(Instant.now());
 
-    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
+    user.update(userToUpdateForm);
+//    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
     return userRepository.save(user);
   }
 
