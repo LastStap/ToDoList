@@ -3,6 +3,8 @@ package dumshenko.daniil.todolist.domain.service;
 import dumshenko.daniil.todolist.domain.model.User;
 import dumshenko.daniil.todolist.domain.repository.UserRepository;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
+
+import java.time.Instant;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,10 @@ public class UserService {
   }
 
   public User createUser(User user) {
+
+    user.setCreatedAt(Instant.now());
+    user.setUpdatedAt(Instant.now());
+
     return userRepository.save(user);
   }
 
@@ -33,6 +39,7 @@ public class UserService {
 
   public User updateUser(User user) {
     UUID userId = user.getId();
+    user.setUpdatedAt(Instant.now());
 
     userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
