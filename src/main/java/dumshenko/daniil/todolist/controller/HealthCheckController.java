@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheckController {
 
-    @GetMapping("/health-check")
-    public ResponseEntity<String> healthCheck() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body("The server is up and running");
-    }
+  @GetMapping("/health-check")
+  public ResponseEntity<String> healthCheck() {
+    return ResponseEntity.status(HttpStatus.OK).body("The server is up and running");
+  }
 }
