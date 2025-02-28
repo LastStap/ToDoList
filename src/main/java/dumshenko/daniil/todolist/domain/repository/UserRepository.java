@@ -10,5 +10,6 @@ public interface UserRepository {
     User save(User user);
     List<User> findAll();
     Optional<User> findById(UUID userId);
+    Optional<User> findByEmailIgnoreCase(String email);
     void delete(User user);
 }

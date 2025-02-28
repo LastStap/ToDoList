@@ -41,6 +41,10 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findById(UUID userId) {
         return userJpaRepository.findById(userId).map(userMapper::toDomain);
     }
+    @Override
+    public Optional<User> findByEmailIgnoreCase(String email) {
+        return userJpaRepository.findByEmail(email.toLowerCase()).map(userMapper::toDomain);
+    }
 
     @Override
     public void delete(User user) {

@@ -2,14 +2,14 @@ package dumshenko.daniil.todolist.controller;
 
 import dumshenko.daniil.todolist.controller.dto.ErrorDto;
 import dumshenko.daniil.todolist.controller.dto.UserDto;
-import dumshenko.daniil.todolist.exception.UserNotFoundException;
-import dumshenko.daniil.todolist.domain.service.UserService;
 import dumshenko.daniil.todolist.domain.model.User;
-
+import dumshenko.daniil.todolist.domain.service.UserService;
+import dumshenko.daniil.todolist.exception.UserNotFoundException;
+import dumshenko.daniil.todolist.mapper.UserMapper;
 import java.util.List;
 import java.util.UUID;
-
-import dumshenko.daniil.todolist.mapper.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+  private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
   private final UserService userService;
   private final UserMapper userMapper;
@@ -28,14 +30,23 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
+  // Spring Security: admin only
   @PostMapping
   public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDTO) {
     User user = userMapper.toDomain(userDTO);
+    User createdUser;
 
-    User createdUser = userService.createUser(user);
+    try {
+      createdUser = userService.createUser(user);
+    } catch (Exception e) {
+      log.error(
+          "Error creating user with email {} and username {}",
+          userDTO.getEmail(),
+          userDTO.getUsername());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 
     UserDto createdUserDto = userMapper.toDto(createdUser);
-
     return ResponseEntity.ok(createdUserDto);
   }
 
@@ -43,15 +54,13 @@ public class UserController {
   public ResponseEntity<List<UserDto>> getUsers() {
     List<User> users = userService.getAllUsers();
 
-    List<UserDto> userDtos = users.stream()
-            .map(userMapper::toDto)
-            .toList();
+    List<UserDto> userDtos = users.stream().map(userMapper::toDto).toList();
 
     return ResponseEntity.ok(userDtos);
   }
 
   @GetMapping("/{userId}")
-  public ResponseEntity<UserDto> getUser(@PathVariable UUID userId){
+  public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
     User user = userService.getUserById(userId);
 
     UserDto userDto = userMapper.toDto(user);
@@ -60,7 +69,8 @@ public class UserController {
   }
 
   @PutMapping("/{userId}")
-  public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UserDto userDTO) {
+  public ResponseEntity<UserDto> updateUser(
+      @PathVariable UUID userId, @RequestBody UserDto userDTO) {
     User user = userMapper.toDomain(userDTO);
 
     User updatedUser = userService.updateUser(userId, user);
@@ -71,7 +81,7 @@ public class UserController {
   }
 
   @DeleteMapping("/{userId}")
-  public ResponseEntity<Void> deleteUser(@PathVariable UUID userId){
+  public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
 
     userService.deleteUser(userId);
 

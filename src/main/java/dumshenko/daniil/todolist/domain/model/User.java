@@ -7,51 +7,39 @@ import lombok.Data;
 public class User {
 
   private UUID id;
-  private String password;
   private String username;
   private String email;
+  private String password;
   private Instant createdAt;
   private Instant updatedAt;
 
   public User() {}
 
-  public User(UUID id, String password, String username, String email, Instant createdAt, Instant updatedAt) {
+  public User(UUID id, String username, String email, String password, Instant createdAt, Instant updatedAt) {
     this.id = id;
-    this.password = password;
     this.username = username;
     this.email = email;
+    this.password = password;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
   @Override
   public String toString() {
-    return "UserDTO{"
-        + "id='"
-        + id
-        + '\''
-        + ", username='"
-        + username
-        + '\''
-        + ", password='"
-        + password
-        + '\''
-        + ", email='"
-        + email
-        + '\''
-        + ", created_at='"
-        + createdAt
-        + '\''
-        + ", updated_at='"
-        + updatedAt
-        + '\''
-        + '}';
+    return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            '}';
   }
 
   public void update(User user) {
     this.username = user.getUsername();
-    this.password = user.getPassword();
     this.email = user.getEmail();
+    this.password = user.getPassword();
     this.updatedAt = Instant.now();
   }
 
@@ -61,14 +49,6 @@ public class User {
 
   public void setId(UUID id) {
     this.id = id;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public String getUsername() {
@@ -85,6 +65,14 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public Instant getCreatedAt() {

@@ -13,24 +13,24 @@ public class UserMapper {
     return new UserDto(
         user.getId(),
         user.getUsername(),
-        user.getPassword(),
         user.getEmail(),
+        user.getPassword(),
         user.getCreatedAt(),
         user.getUpdatedAt());
   }
 
   public User toDomain(UserDto userDto) {
-    UUID userId;
-    if (userDto.getId() != null) {
-      userId = userDto.getId();
-    } else{
-      userId = null;
-    }
+//    UUID userId;
+//    if (userDto.getId() != null) {
+//      userId = userDto.getId();
+//    } else {
+//      userId = null;
+//    }
     return new User(
-        userId,
+        null,
         userDto.getUsername(),
-        userDto.getPassword(),
         userDto.getEmail(),
+        userDto.getPassword(),
         userDto.getCreatedAt(),
         userDto.getUpdatedAt());
   }
@@ -39,8 +39,8 @@ public class UserMapper {
     return new User(
         userDto.getId(),
         userDto.getUsername(),
-        userDto.getPassword(),
         userDto.getEmail(),
+        userDto.getPassword(),
         userDto.getCreatedAt(),
         userDto.getUpdatedAt());
   }
@@ -49,19 +49,19 @@ public class UserMapper {
     return new User(
         userEntity.getId(),
         userEntity.getUsername(),
-        userEntity.getPassword(),
         userEntity.getEmail(),
+        userEntity.getPassword(),
         userEntity.getCreatedAt(),
         userEntity.getUpdatedAt());
   }
 
   public UserEntity toEntity(User user) {
     return new UserEntity(
-            user.getId(),
-            user.getUsername(),
-            user.getPassword(),
-            user.getEmail(),
-            user.getCreatedAt(),
-            user.getUpdatedAt());
+        user.getId(),
+        user.getUsername(),
+        user.getEmail(),
+        user.getPassword(),
+        user.getCreatedAt(),
+        user.getUpdatedAt());
   }
 }
