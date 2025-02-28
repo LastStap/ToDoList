@@ -6,3 +6,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/classroom
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false

@@ -3,86 +3,102 @@ package dumshenko.daniil.todolist.controller.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CommentDto {
-    private String id;
-    private String content;
-    @JsonProperty("task_id")
-    private String taskId;
-    @JsonProperty("user_id")
-    private String userId;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
+  private String id;
+  private String content;
 
-    public CommentDto() {
-    }
+  @JsonProperty("task_id")
+  private String taskId;
 
-    public CommentDto(String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
-        this.id = id;
-        this.content = content;
-        this.taskId = taskId;
-        this.userId = userId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+  @JsonProperty("user_id")
+  private String userId;
 
-    public String getId() {
-        return id;
-    }
+  @JsonProperty("created_at")
+  private String createdAt;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @JsonProperty("updated_at")
+  private String updatedAt;
 
-    public String getContent() {
-        return content;
-    }
+  public CommentDto() {}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public CommentDto(
+      String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
+    this.id = id;
+    this.content = content;
+    this.taskId = taskId;
+    this.userId = userId;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
 
-    public String getTaskId() {
-        return taskId;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getUserId() {
-        return userId;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+  public String getTaskId() {
+    return taskId;
+  }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
+  }
 
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
+  public String getUserId() {
+    return userId;
+  }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-    @Override
-    public String toString() {
-        return "CommentDTO{" +
-                "id='" + id + '\'' +
-                ", content='" + content + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                '}';
-    }
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  @Override
+  public String toString() {
+    return "CommentDTO{"
+        + "id='"
+        + id
+        + '\''
+        + ", content='"
+        + content
+        + '\''
+        + ", taskId='"
+        + taskId
+        + '\''
+        + ", userId='"
+        + userId
+        + '\''
+        + ", createdAt='"
+        + createdAt
+        + '\''
+        + ", updatedAt='"
+        + updatedAt
+        + '\''
+        + '}';
+  }
 }

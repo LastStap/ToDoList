@@ -1,122 +1,88 @@
 package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
+import lombok.Data;
 
+@Data
 public class TaskDto {
 
-    private String id;
-    private String title;
-    private String description;
-    private String status;
-    private String priority;
-    @JsonProperty("due_date")
-    private String dueDate;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
-    @JsonProperty("user_id")
-    private String userId;
+  private final UUID id;
+  private final String title;
+  private final String description;
+  private final TaskStatusDto status;
+  private final TaskPriorityDto priority;
 
-    public TaskDto() {
-    }
+  @JsonProperty("due_date")
+  private Instant dueDate;
 
-    public TaskDto(String id, String title, String description, String status, String priority, String dueDate, String createdAt, String updatedAt, String userId) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.priority = priority;
-        this.dueDate = dueDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.userId = userId;
-    }
+  @JsonProperty("created_at")
+  private Instant createdAt;
 
-    public String getId() {
-        return id;
-    }
+  @JsonProperty("updated_at")
+  private Instant updatedAt;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @JsonProperty("user_id")
+  private UUID userId;
 
-    public String getTitle() {
-        return title;
-    }
+  public TaskDto(UUID id, String title, String description, TaskStatusDto status, TaskPriorityDto priority) {
+      this.id = id;
+      this.title = title;
+      this.description = description;
+      this.status = status;
+      this.priority = priority;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    TaskDto taskDto = (TaskDto) o;
+    return Objects.equals(id, taskDto.id)
+        && Objects.equals(title, taskDto.title)
+        && Objects.equals(description, taskDto.description)
+        && Objects.equals(status, taskDto.status)
+        && Objects.equals(priority, taskDto.priority)
+        && Objects.equals(dueDate, taskDto.dueDate)
+        && Objects.equals(createdAt, taskDto.createdAt)
+        && Objects.equals(updatedAt, taskDto.updatedAt)
+        && Objects.equals(userId, taskDto.userId);
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id, title, description, status, priority, dueDate, createdAt, updatedAt, userId);
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "TaskDTO{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", priority='" + priority + '\'' +
-                ", dueDate='" + dueDate + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", userId='" + userId + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "TaskDTO{"
+        + "id='"
+        + id
+        + '\''
+        + ", title='"
+        + title
+        + '\''
+        + ", description='"
+        + description
+        + '\''
+        + ", status='"
+        + status
+        + '\''
+        + ", priority='"
+        + priority
+        + '\''
+        + ", dueDate='"
+        + dueDate
+        + '\''
+        + ", createdAt='"
+        + createdAt
+        + '\''
+        + ", updatedAt='"
+        + updatedAt
+        + '\''
+        + '}';
+  }
 }

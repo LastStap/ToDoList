@@ -1,0 +1,54 @@
+package dumshenko.daniil.todolist.domain.service;
+
+import dumshenko.daniil.todolist.domain.model.User;
+import dumshenko.daniil.todolist.domain.repository.UserRepository;
+import dumshenko.daniil.todolist.exception.UserNotFoundException;
+
+import java.time.Instant;
+import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+  private final UserRepository userRepository;
+
+  @Autowired
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public User createUser(User user) {
+
+    user.setCreatedAt(Instant.now());
+    user.setUpdatedAt(Instant.now());
+
+    return userRepository.save(user);
+  }
+
+  public List<User> getAllUsers() {
+    return userRepository.findAll();
+  }
+
+  public User getUserById(UUID userId) {
+    Optional<User> user = userRepository.findById(userId);
+
+    return user.orElseThrow(() -> new UserNotFoundException(userId));
+  }
+
+  public User updateUser(User user) {
+    UUID userId = user.getId();
+    user.setUpdatedAt(Instant.now());
+
+    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+    return userRepository.save(user);
+  }
+
+  public void deleteUser(UUID userId) {
+    User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+    userRepository.delete(user);
+  }
+}

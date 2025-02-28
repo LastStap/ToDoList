@@ -4,84 +4,100 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SubtaskDto {
 
-    private String id;
-    private String title;
-    private String status;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
-    @JsonProperty("task_id")
-    private String taskId;
+  private String id;
+  private String title;
+  private String status;
 
-    public SubtaskDto() {}
+  @JsonProperty("created_at")
+  private String createdAt;
 
-    public SubtaskDto(String id, String title, String status, String createdAt, String updatedAt, String taskId) {
-        this.id = id;
-        this.title = title;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.taskId = taskId;
-    }
+  @JsonProperty("updated_at")
+  private String updatedAt;
 
-    public String getId() {
-        return id;
-    }
+  @JsonProperty("task_id")
+  private String taskId;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public SubtaskDto() {}
 
-    public String getTitle() {
-        return title;
-    }
+  public SubtaskDto(
+      String id, String title, String status, String createdAt, String updatedAt, String taskId) {
+    this.id = id;
+    this.title = title;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.taskId = taskId;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public String getCreatedAt() {
+    return createdAt;
+  }
 
-    public String getTaskId() {
-        return taskId;
-    }
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
 
-    @Override
-    public String toString() {
-        return "SubtaskDTO{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", status='" + status + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", taskId='" + taskId + '\'' +
-                '}';
-    }
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public String getTaskId() {
+    return taskId;
+  }
+
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
+  }
+
+  @Override
+  public String toString() {
+    return "SubtaskDTO{"
+        + "id='"
+        + id
+        + '\''
+        + ", title='"
+        + title
+        + '\''
+        + ", status='"
+        + status
+        + '\''
+        + ", createdAt='"
+        + createdAt
+        + '\''
+        + ", updatedAt='"
+        + updatedAt
+        + '\''
+        + ", taskId='"
+        + taskId
+        + '\''
+        + '}';
+  }
 }
