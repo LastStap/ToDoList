@@ -15,22 +15,17 @@ public class UserDto {
   @JsonProperty("created_at")
   private final Instant createdAt;
 
-  @JsonProperty("updated_at")
-  private final Instant updatedAt;
-
   public UserDto(
       UUID id,
       String username,
       String email,
       String password,
-      Instant createdAt,
-      Instant updatedAt) {
+      Instant createdAt) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
   public UUID getId() {
@@ -53,10 +48,6 @@ public class UserDto {
     return createdAt;
   }
 
-  public Instant getUpdatedAt() {
-    return updatedAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -65,13 +56,12 @@ public class UserDto {
         && Objects.equals(username, userDto.username)
         && Objects.equals(email, userDto.email)
         && Objects.equals(password, userDto.password)
-        && Objects.equals(createdAt, userDto.createdAt)
-        && Objects.equals(updatedAt, userDto.updatedAt);
+        && Objects.equals(createdAt, userDto.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, email, password, createdAt, updatedAt);
+    return Objects.hash(id, username, email, password, createdAt);
   }
 
   @Override
@@ -90,8 +80,6 @@ public class UserDto {
         + '\''
         + ", createdAt="
         + createdAt
-        + ", updatedAt="
-        + updatedAt
         + '}';
   }
 }

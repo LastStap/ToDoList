@@ -1,0 +1,17 @@
+--liquibase formatted sql
+--changeset daniil.dumshenko:8
+
+ALTER TABLE users
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE attachment
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE category
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE comment
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE subtask
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE task
+    ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE task_category
+    ALTER COLUMN id DROP DEFAULT;

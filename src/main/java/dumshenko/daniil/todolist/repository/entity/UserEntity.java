@@ -26,17 +26,12 @@ public class UserEntity {
   @Column(name = "created_at")
   private Instant createdAt;
 
-  @Column(name = "updated_at")
-  private Instant updatedAt;
-
-
-  public UserEntity(UUID id, String username, String email, String password, Instant createdAt, Instant updatedAt) {
+  public UserEntity(UUID id, String username, String email, String password, Instant createdAt) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
   public UserEntity() {
@@ -83,11 +78,4 @@ public class UserEntity {
     this.createdAt = createdAt;
   }
 
-  public Instant getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Instant updatedAt) {
-    this.updatedAt = updatedAt;
-  }
 }
