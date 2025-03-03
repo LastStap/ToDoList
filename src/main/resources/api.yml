@@ -8,6 +8,8 @@ servers:
   - url: http://localhost:8080
 
 tags:
+  - name: Auth
+    description: Operations for sign-up/in
   - name: Users
     description: Set of API endpoints responsible for CRUD of Users objects.
   - name: Tasks
@@ -22,6 +24,24 @@ tags:
     description: Set of API endpoints responsible for CRUD of Attachments objects.
 
 paths:
+
+  /sign-up:
+    post:
+      tags:
+        - Auth
+      description: Create new User by themselves.
+      operationId: signUp
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+
+      responses:
+        201:
+          description: Specified User object (resource) was successfully created.
+
   /users:
     post:
       tags:
