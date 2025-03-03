@@ -17,12 +17,11 @@ public class Task {
   private TaskPriority priority;
   private Instant dueDate;
   private Instant createdAt;
-  private Instant updatedAt;
   private UUID userId;
 
   public Task() {}
 
-  public Task(UUID id, String title, String description, TaskStatus status, TaskPriority priority, Instant dueDate, Instant createdAt, Instant updatedAt, UUID userId) {
+  public Task(UUID id, String title, String description, TaskStatus status, TaskPriority priority, Instant dueDate, Instant createdAt, UUID userId) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -30,7 +29,6 @@ public class Task {
     this.priority = priority;
     this.dueDate = dueDate;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
     this.userId = userId;
   }
 
@@ -57,9 +55,6 @@ public class Task {
         + '\''
         + ", createdAt='"
         + createdAt
-        + '\''
-        + ", updatedAt='"
-        + updatedAt
         + '\''
         + ", userId='"
         + userId

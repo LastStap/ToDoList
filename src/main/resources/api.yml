@@ -633,11 +633,6 @@ components:
           format: date-time
           default: now()
 
-        updated_at:
-          type: string
-          format: date-time
-          default: now()
-
     UserInput:
       type: object
       required:

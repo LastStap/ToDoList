@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ToDoList
+
+  datasource:
+    # URL for the H2 in-memory database.
+    # 'jdbc:h2:mem:testdb' creates an in-memory database named "testdb".
+    url: jdbc:h2:mem:testdb
+    # The JDBC driver class for H2.
+    driver-class-name: org.h2.Driver

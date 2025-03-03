@@ -10,8 +10,6 @@ import dumshenko.daniil.todolist.domain.service.UserService;
 import dumshenko.daniil.todolist.exception.PasswordIncorrectException;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import dumshenko.daniil.todolist.mapper.UserMapper;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

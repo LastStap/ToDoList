@@ -23,7 +23,6 @@ public class UserService {
 
   public User createUser(User user) {
     user.setCreatedAt(Instant.now());
-    user.setUpdatedAt(Instant.now());
 
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
@@ -43,7 +42,6 @@ public class UserService {
 
   public User updateUser(UUID userId, User userToUpdateForm) {
     User user = getUserById(userId);
-    user.setUpdatedAt(Instant.now());
 
     user.update(userToUpdateForm);
     //    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
