@@ -2,16 +2,15 @@
 --changeset daniil.dumshenko:1
 
 CREATE TABLE Users (
-                       id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                       id UUID NOT NULL PRIMARY KEY,
                        username VARCHAR(50) NOT NULL UNIQUE,
                        email VARCHAR(100) NOT NULL UNIQUE,
                        password VARCHAR(255) NOT NULL,
-                       created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-                       updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+                       created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE Task (
-                      id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                      id UUID NOT NULL PRIMARY KEY,
                       user_id UUID NOT NULL,
                       title VARCHAR(100) NOT NULL,
                       description TEXT,
@@ -24,7 +23,7 @@ CREATE TABLE Task (
 );
 
 CREATE TABLE Category (
-                          id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                          id UUID NOT NULL PRIMARY KEY,
                           name VARCHAR(50) NOT NULL,
                           description TEXT,
                           user_id UUID NOT NULL,
@@ -34,7 +33,7 @@ CREATE TABLE Category (
 );
 
 CREATE TABLE Task_Category (
-                               id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                               id UUID NOT NULL PRIMARY KEY,
                                task_id UUID NOT NULL,
                                category_id UUID NOT NULL,
                                CONSTRAINT fk_task_category_task FOREIGN KEY (task_id) REFERENCES Task (id) ON DELETE CASCADE,
@@ -42,7 +41,7 @@ CREATE TABLE Task_Category (
 );
 
 CREATE TABLE Subtask (
-                         id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                         id UUID NOT NULL PRIMARY KEY,
                          task_id UUID NOT NULL,
                          title VARCHAR(100) NOT NULL,
                          status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
@@ -52,7 +51,7 @@ CREATE TABLE Subtask (
 );
 
 CREATE TABLE Comment (
-                         id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                         id UUID NOT NULL PRIMARY KEY,
                          task_id UUID NOT NULL,
                          user_id UUID NOT NULL,
                          content TEXT NOT NULL,
@@ -63,7 +62,7 @@ CREATE TABLE Comment (
 );
 
 CREATE TABLE Attachment (
-                            id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                            id UUID NOT NULL PRIMARY KEY,
                             task_id UUID NOT NULL,
                             file_name VARCHAR(255) NOT NULL,
                             file_path VARCHAR(500) NOT NULL,

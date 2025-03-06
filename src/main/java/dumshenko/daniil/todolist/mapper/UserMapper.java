@@ -3,6 +3,8 @@ package dumshenko.daniil.todolist.mapper;
 import dumshenko.daniil.todolist.controller.dto.UserDto;
 import dumshenko.daniil.todolist.domain.model.User;
 import dumshenko.daniil.todolist.repository.entity.UserEntity;
+
+import java.util.Collections;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 
@@ -15,24 +17,16 @@ public class UserMapper {
         user.getUsername(),
         user.getEmail(),
         user.getPassword(),
-        user.getCreatedAt(),
-        user.getUpdatedAt());
+        user.getCreatedAt());
   }
 
   public User toDomain(UserDto userDto) {
-//    UUID userId;
-//    if (userDto.getId() != null) {
-//      userId = userDto.getId();
-//    } else {
-//      userId = null;
-//    }
     return new User(
         null,
         userDto.getUsername(),
         userDto.getEmail(),
         userDto.getPassword(),
-        userDto.getCreatedAt(),
-        userDto.getUpdatedAt());
+        userDto.getCreatedAt());
   }
 
   public User toDomain(UUID userId, UserDto userDto) {
@@ -41,8 +35,7 @@ public class UserMapper {
         userDto.getUsername(),
         userDto.getEmail(),
         userDto.getPassword(),
-        userDto.getCreatedAt(),
-        userDto.getUpdatedAt());
+        userDto.getCreatedAt());
   }
 
   public User toDomain(UserEntity userEntity) {
@@ -51,8 +44,7 @@ public class UserMapper {
         userEntity.getUsername(),
         userEntity.getEmail(),
         userEntity.getPassword(),
-        userEntity.getCreatedAt(),
-        userEntity.getUpdatedAt());
+        userEntity.getCreatedAt());
   }
 
   public UserEntity toEntity(User user) {
@@ -61,7 +53,6 @@ public class UserMapper {
         user.getUsername(),
         user.getEmail(),
         user.getPassword(),
-        user.getCreatedAt(),
-        user.getUpdatedAt());
+        user.getCreatedAt());
   }
 }

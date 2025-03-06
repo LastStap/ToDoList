@@ -11,17 +11,15 @@ public class User {
   private String email;
   private String password;
   private Instant createdAt;
-  private Instant updatedAt;
 
   public User() {}
 
-  public User(UUID id, String username, String email, String password, Instant createdAt, Instant updatedAt) {
+  public User(UUID id, String username, String email, String password, Instant createdAt) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
   @Override
@@ -32,7 +30,6 @@ public class User {
             ", email='" + email + '\'' +
             ", password='" + password + '\'' +
             ", createdAt=" + createdAt +
-            ", updatedAt=" + updatedAt +
             '}';
   }
 
@@ -40,7 +37,6 @@ public class User {
     this.username = user.getUsername();
     this.email = user.getEmail();
     this.password = user.getPassword();
-    this.updatedAt = Instant.now();
   }
 
   public UUID getId() {
@@ -81,13 +77,5 @@ public class User {
 
   public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public Instant getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Instant updatedAt) {
-    this.updatedAt = updatedAt;
   }
 }
