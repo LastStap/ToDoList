@@ -44,7 +44,7 @@ public class UserService {
     User user = getUserById(userId);
 
     user.update(userToUpdateForm);
-    //    userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
     return userRepository.save(user);
   }
 

@@ -22,7 +22,7 @@ class UserMapperTest {
             "okroch0",
             "lgalvan0@cloudflare.com",
             "$2a$04$ts.5mJGxqup5GQHEs5OUqurWM.rS9iFWABZx8gnvxKuFhP4Fd2b8q",
-            Instant.parse("2025-01-06T15:54:32.000000Z"));
+            Instant.now());
 
     // when
     UserDto userDto = userMapper.toDto(user);
