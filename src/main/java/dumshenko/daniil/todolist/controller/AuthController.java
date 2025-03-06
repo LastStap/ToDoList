@@ -38,10 +38,9 @@ public class AuthController {
   @PostMapping("/sign-up")
   public ResponseEntity<Void> signUp(@RequestBody UserDto userDto) {
     User user = userMapper.toDomain(userDto);
-    User createdUser;
 
     try {
-      createdUser = userService.createUser(user);
+      userService.createUser(user);
     } catch (Exception e) {
       log.error(
           "Error creating user with email {} and username {}",
@@ -50,7 +49,6 @@ public class AuthController {
       return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    UserDto createdUserDto = userMapper.toDto(createdUser);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 

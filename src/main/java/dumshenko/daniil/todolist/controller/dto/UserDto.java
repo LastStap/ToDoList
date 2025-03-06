@@ -10,9 +10,11 @@ public class UserDto {
   private final UUID id;
   private final String username;
   private final String email;
+
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private final String password;
 
-  @JsonProperty("created_at")
+  @JsonProperty(value = "created_at", access = JsonProperty.Access.READ_ONLY)
   private final Instant createdAt;
 
   public UserDto(

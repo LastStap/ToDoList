@@ -3,9 +3,9 @@ spring:
     name: ToDoList
 
   datasource:
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/classroom
-    password: ${DATABASE_PASSWORD}
+    username: laststap
+    url: jdbc:postgresql://localhost:5432/toDoList
+    password: lastPasswordForToDoList
     driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
