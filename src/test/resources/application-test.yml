@@ -8,3 +8,7 @@ spring:
     url: jdbc:h2:mem:testdb
     # The JDBC driver class for H2.
     driver-class-name: org.h2.Driver
+
+jwt:
+  secret: ask1dc6a-n6ht-gkl5-7564-h6k48707810
+  ttl-millis: 43200000
