@@ -694,11 +694,6 @@ components:
           format: date-time
           default: now()
 
-        updated_at:
-          type: string
-          format: date-time
-          default: now()
-
     TaskInput:
       type: object
       properties:
@@ -800,11 +795,6 @@ components:
           format: date-time
           default: now()
 
-        updated_at:
-          type: string
-          format: date-time
-          default: now()
-
     SubtaskInput:
       type: object
       properties:
@@ -843,11 +833,6 @@ components:
           type: string
 
         created_at:
-          type: string
-          format: date-time
-          default: now()
-
-        updated_at:
           type: string
           format: date-time
           default: now()

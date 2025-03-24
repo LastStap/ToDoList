@@ -2,38 +2,37 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.Instant;
+import java.util.UUID;
+
 public class SubtaskDto {
 
-  private String id;
+  private UUID id;
   private String title;
   private String status;
 
   @JsonProperty("created_at")
-  private String createdAt;
-
-  @JsonProperty("updated_at")
-  private String updatedAt;
+  private Instant createdAt;
 
   @JsonProperty("task_id")
-  private String taskId;
+  private UUID taskId;
 
   public SubtaskDto() {}
 
   public SubtaskDto(
-      String id, String title, String status, String createdAt, String updatedAt, String taskId) {
+      UUID id, String title, String status, Instant createdAt, UUID taskId) {
     this.id = id;
     this.title = title;
     this.status = status;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
     this.taskId = taskId;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -53,27 +52,19 @@ public class SubtaskDto {
     this.status = status;
   }
 
-  public String getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
   }
 
-  public String getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public String getTaskId() {
+  public UUID getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(UUID taskId) {
     this.taskId = taskId;
   }
 
@@ -91,9 +82,6 @@ public class SubtaskDto {
         + '\''
         + ", createdAt='"
         + createdAt
-        + '\''
-        + ", updatedAt='"
-        + updatedAt
         + '\''
         + ", taskId='"
         + taskId

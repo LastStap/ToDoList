@@ -2,7 +2,6 @@ package dumshenko.daniil.todolist.domain.model;
 
 import java.time.Instant;
 import java.util.UUID;
-import lombok.Data;
 
 public class User {
 

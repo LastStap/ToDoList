@@ -1,40 +1,43 @@
 package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.Instant;
+import java.util.UUID;
+
+@Getter
+@Setter
 public class CommentDto {
-  private String id;
+  private UUID id;
   private String content;
 
+  @JsonProperty("created_at")
+  private Instant createdAt;
+
   @JsonProperty("task_id")
-  private String taskId;
+  private UUID taskId;
 
   @JsonProperty("user_id")
-  private String userId;
-
-  @JsonProperty("created_at")
-  private String createdAt;
-
-  @JsonProperty("updated_at")
-  private String updatedAt;
+  private UUID userId;
 
   public CommentDto() {}
 
   public CommentDto(
-      String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
+      UUID id, String content, Instant createdAt, UUID taskId, UUID userId) {
     this.id = id;
     this.content = content;
     this.taskId = taskId;
     this.userId = userId;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -46,36 +49,28 @@ public class CommentDto {
     this.content = content;
   }
 
-  public String getTaskId() {
+  public UUID getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(UUID taskId) {
     this.taskId = taskId;
   }
 
-  public String getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 
-  public String getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public String getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override
@@ -95,9 +90,6 @@ public class CommentDto {
         + '\''
         + ", createdAt='"
         + createdAt
-        + '\''
-        + ", updatedAt='"
-        + updatedAt
         + '\''
         + '}';
   }

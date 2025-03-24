@@ -1,7 +1,9 @@
 package dumshenko.daniil.todolist.exception;
 
+import java.util.UUID;
+
 public class CategoryNotFoundException extends RuntimeException {
-  public CategoryNotFoundException(String message) {
-    super(message);
+  public CategoryNotFoundException(UUID message) {
+    super(String.valueOf(message));
   }
 }

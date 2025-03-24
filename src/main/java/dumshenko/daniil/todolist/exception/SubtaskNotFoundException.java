@@ -1,7 +1,9 @@
 package dumshenko.daniil.todolist.exception;
 
+import java.util.UUID;
+
 public class SubtaskNotFoundException extends RuntimeException {
-  public SubtaskNotFoundException(String message) {
-    super(message);
+  public SubtaskNotFoundException(UUID message) {
+    super(String.valueOf(message));
   }
 }
