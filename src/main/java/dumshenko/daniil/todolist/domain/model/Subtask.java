@@ -1,31 +1,32 @@
 package dumshenko.daniil.todolist.domain.model;
 
+import java.time.Instant;
+import java.util.UUID;
+
 public class Subtask {
 
-  private String id;
+  private UUID id;
   private String title;
   private String status;
-  private String createdAt;
-  private String updatedAt;
-  private String taskId;
+  private Instant createdAt;
+  private UUID taskId;
 
   public Subtask() {}
 
   public Subtask(
-      String id, String title, String status, String createdAt, String updatedAt, String taskId) {
+      UUID id, String title, String status, Instant createdAt, UUID taskId) {
     this.id = id;
     this.title = title;
     this.status = status;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
     this.taskId = taskId;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -45,27 +46,19 @@ public class Subtask {
     this.status = status;
   }
 
-  public String getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
   }
 
-  public String getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public String getTaskId() {
+  public UUID getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(UUID taskId) {
     this.taskId = taskId;
   }
 
@@ -84,12 +77,14 @@ public class Subtask {
         + ", createdAt='"
         + createdAt
         + '\''
-        + ", updatedAt='"
-        + updatedAt
-        + '\''
         + ", taskId='"
         + taskId
         + '\''
         + '}';
+  }
+
+  public void update(Subtask subtask) {
+    this.title = subtask.getTitle();
+    this.status = subtask.getStatus();
   }
 }

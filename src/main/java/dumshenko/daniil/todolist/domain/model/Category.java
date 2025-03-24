@@ -1,25 +1,27 @@
 package dumshenko.daniil.todolist.domain.model;
 
+import java.util.UUID;
+
 public class Category {
-  private String id;
+  private UUID id;
   private String name;
   private String description;
-  private String userId;
+  private UUID userId;
 
   public Category() {}
 
-  public Category(String id, String name, String description, String userId) {
+  public Category(UUID id, String name, String description, UUID userId) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.userId = userId;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -39,11 +41,11 @@ public class Category {
     this.description = description;
   }
 
-  public String getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 
@@ -63,5 +65,10 @@ public class Category {
         + userId
         + '\''
         + '}';
+  }
+
+  public void update(Category category) {
+    this.name = category.getName();
+    this.description = category.getDescription();
   }
 }

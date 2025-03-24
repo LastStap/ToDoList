@@ -2,7 +2,6 @@ package dumshenko.daniil.todolist.domain.service;
 
 import dumshenko.daniil.todolist.domain.model.User;
 import dumshenko.daniil.todolist.domain.repository.UserRepository;
-import dumshenko.daniil.todolist.exception.UserAlreadyExistsException;
 import dumshenko.daniil.todolist.exception.UserNotFoundException;
 import java.time.Instant;
 import java.util.*;

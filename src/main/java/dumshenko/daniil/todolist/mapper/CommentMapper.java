@@ -1,22 +1,57 @@
 package dumshenko.daniil.todolist.mapper;
 
 import dumshenko.daniil.todolist.controller.dto.CommentDto;
-import dumshenko.daniil.todolist.repository.entity.CommentEntity;
 import dumshenko.daniil.todolist.domain.model.Comment;
+import dumshenko.daniil.todolist.repository.entity.CommentEntity;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CommentMapper {
 
-  public CommentDto toCommentDto(Comment comment) {
-    return null;
+  public CommentDto toDto(Comment comment) {
+    return new CommentDto(
+        comment.getId(),
+        comment.getContent(),
+        comment.getCreatedAt(),
+        comment.getTaskId(),
+        comment.getUserId());
   }
 
-  public Comment toDomainFromDto(CommentDto commentDto) {
-    return null;
+  public Comment toDomain(CommentDto commentDto) {
+    return new Comment(
+        null,
+        commentDto.getContent(),
+        commentDto.getCreatedAt(),
+        commentDto.getTaskId(),
+        commentDto.getUserId());
   }
 
-  public Comment toDomainFromEntity(CommentEntity commentEntity) {
-    return null;
+  public Comment toDomain(UUID commentId, CommentDto commentDto) {
+    return new Comment(
+        commentDto.getId(),
+        commentDto.getContent(),
+        commentDto.getCreatedAt(),
+        commentDto.getTaskId(),
+        commentDto.getUserId());
+  }
+
+  public Comment toDomain(CommentEntity commentEntity) {
+    return new Comment(
+        commentEntity.getId(),
+        commentEntity.getContent(),
+        commentEntity.getCreatedAt(),
+        commentEntity.getTask().getId(),
+        commentEntity.getUser().getId());
+  }
+
+  public CommentEntity toEntity(Comment comment) {
+    return new CommentEntity(
+            comment.getId(),
+            comment.getContent(),
+            comment.getCreatedAt(),
+            comment.getTaskId(),
+            comment.getUserId()
+    );
   }
 }

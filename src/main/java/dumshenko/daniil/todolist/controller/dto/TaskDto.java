@@ -1,12 +1,11 @@
 package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-import lombok.Data;
 
-@Data
 public class TaskDto {
 
   private final UUID id;
@@ -21,18 +20,62 @@ public class TaskDto {
   @JsonProperty("created_at")
   private Instant createdAt;
 
-  @JsonProperty("updated_at")
-  private Instant updatedAt;
-
   @JsonProperty("user_id")
   private UUID userId;
 
-  public TaskDto(UUID id, String title, String description, TaskStatusDto status, TaskPriorityDto priority) {
-      this.id = id;
-      this.title = title;
-      this.description = description;
-      this.status = status;
-      this.priority = priority;
+  public TaskDto(UUID id, String title, String description, TaskStatusDto status, TaskPriorityDto priority, Instant dueDate, Instant createdAt, UUID userId) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.status = status;
+    this.priority = priority;
+    this.dueDate = dueDate;
+    this.createdAt = createdAt;
+    this.userId = userId;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public TaskStatusDto getStatus() {
+    return status;
+  }
+
+  public TaskPriorityDto getPriority() {
+    return priority;
+  }
+
+  public Instant getDueDate() {
+    return dueDate;
+  }
+
+  public void setDueDate(Instant dueDate) {
+    this.dueDate = dueDate;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
   }
 
   @Override
@@ -46,14 +89,13 @@ public class TaskDto {
         && Objects.equals(priority, taskDto.priority)
         && Objects.equals(dueDate, taskDto.dueDate)
         && Objects.equals(createdAt, taskDto.createdAt)
-        && Objects.equals(updatedAt, taskDto.updatedAt)
         && Objects.equals(userId, taskDto.userId);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, title, description, status, priority, dueDate, createdAt, updatedAt, userId);
+        id, title, description, status, priority, dueDate, createdAt, userId);
   }
 
   @Override
@@ -79,9 +121,6 @@ public class TaskDto {
         + '\''
         + ", createdAt='"
         + createdAt
-        + '\''
-        + ", updatedAt='"
-        + updatedAt
         + '\''
         + '}';
   }

@@ -1,36 +1,50 @@
 package dumshenko.daniil.todolist.domain.service;
 
-import dumshenko.daniil.todolist.exception.CategoryNotFoundException;
 import dumshenko.daniil.todolist.domain.model.Category;
+import dumshenko.daniil.todolist.domain.repository.CategoryRepository;
+import dumshenko.daniil.todolist.exception.CategoryNotFoundException;
 import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService{
+public class CategoryService {
 
+  private final CategoryRepository categoryRepository;
 
-
-  public Category createCategory(String name, String description) {
-    return null;
+  @Autowired
+  public CategoryService(CategoryRepository categoryRepository) {
+    this.categoryRepository = categoryRepository;
   }
 
+  public Category createCategory(Category category) {
+    return categoryRepository.save(category);
+  }
 
   public List<Category> getAllCategories() {
-    return null;
+    return categoryRepository.findAll();
   }
 
+  public Category getCategoryById(UUID categoryId) {
+    Optional<Category> category = categoryRepository.findById(categoryId);
 
-  public Category getCategoryById(String categoryId) {
-    return null;
+    return category.orElseThrow(() -> new CategoryNotFoundException(categoryId));
   }
 
+  public Category updateCategory(UUID categoryId, Category categoryToUpdateForm) {
+    Category category = getCategoryById(categoryId);
 
-  public Category updateCategory(String categoryId, Category category) {
-    return null;
+    category.update(categoryToUpdateForm);
+
+    return categoryRepository.save(category);
   }
 
+  public void deleteCategory(UUID categoryId) {
+    Category category =
+        categoryRepository
+            .findById(categoryId)
+            .orElseThrow(() -> new CategoryNotFoundException(categoryId));
 
-  public void deleteCategory(String categoryId) throws CategoryNotFoundException {
-
+    categoryRepository.delete(category);
   }
 }

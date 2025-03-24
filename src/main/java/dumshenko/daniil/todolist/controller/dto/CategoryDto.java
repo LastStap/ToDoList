@@ -2,28 +2,30 @@ package dumshenko.daniil.todolist.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 public class CategoryDto {
-  private String id;
+  private UUID id;
   private String name;
   private String description;
 
   @JsonProperty("user_id")
-  private String userId;
+  private UUID userId;
 
   public CategoryDto() {}
 
-  public CategoryDto(String id, String name, String description, String userId) {
+  public CategoryDto(UUID id, String name, String description, UUID userId) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.userId = userId;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -43,11 +45,11 @@ public class CategoryDto {
     this.description = description;
   }
 
-  public String getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 

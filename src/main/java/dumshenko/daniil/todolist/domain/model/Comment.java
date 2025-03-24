@@ -1,30 +1,30 @@
 package dumshenko.daniil.todolist.domain.model;
 
+import java.time.Instant;
+import java.util.UUID;
+
 public class Comment {
-  private String id;
+  private UUID id;
   private String content;
-  private String taskId;
-  private String userId;
-  private String createdAt;
-  private String updatedAt;
+  private Instant createdAt;
+  private UUID taskId;
+  private UUID userId;
 
   public Comment() {}
 
-  public Comment(
-      String id, String content, String taskId, String userId, String createdAt, String updatedAt) {
+  public Comment(UUID id, String content, Instant createdAt, UUID taskId, UUID userId) {
     this.id = id;
     this.content = content;
+    this.createdAt = createdAt;
     this.taskId = taskId;
     this.userId = userId;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -36,36 +36,28 @@ public class Comment {
     this.content = content;
   }
 
-  public String getTaskId() {
+  public UUID getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(UUID taskId) {
     this.taskId = taskId;
   }
 
-  public String getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(UUID userId) {
     this.userId = userId;
   }
 
-  public String getCreatedAt() {
+  public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public String getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override
@@ -86,9 +78,10 @@ public class Comment {
         + ", createdAt='"
         + createdAt
         + '\''
-        + ", updatedAt='"
-        + updatedAt
-        + '\''
         + '}';
+  }
+
+  public void update(Comment comment) {
+    this.content = comment.getContent();
   }
 }
