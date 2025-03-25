@@ -5,6 +5,3 @@ databaseChangeLog:
   - include:
       file: 002-add-default-user-data.sql
       relativeToChangelogFile: true
-  - include:
-      file: 008-change-id-to-all-tables.sql
-      relativeToChangelogFile: true

@@ -17,11 +17,11 @@ public class Task {
   private TaskPriority priority;
   private Instant dueDate;
   private Instant createdAt;
-  private UUID userId;
+  private User user;
 
   public Task() {}
 
-  public Task(UUID id, String title, String description, TaskStatus status, TaskPriority priority, Instant dueDate, Instant createdAt, UUID userId) {
+  public Task(UUID id, String title, String description, TaskStatus status, TaskPriority priority, Instant dueDate, Instant createdAt, User user) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -29,7 +29,7 @@ public class Task {
     this.priority = priority;
     this.dueDate = dueDate;
     this.createdAt = createdAt;
-    this.userId = userId;
+    this.user = user;
   }
 
   @Override
@@ -57,17 +57,16 @@ public class Task {
         + createdAt
         + '\''
         + ", userId='"
-        + userId
+        + user.getId()
         + '\''
         + '}';
   }
 
-  public void update(Task task) {
-    this.title = task.getTitle();
-    this.description = task.getDescription();
-    this.status = task.getStatus();
-    this.priority = task.getPriority();
-    this.dueDate = task.getDueDate();
+  public void update(Task taskToUpdateFrom) {
+    this.title = taskToUpdateFrom.getTitle();
+    this.description = taskToUpdateFrom.getDescription();
+    this.status = taskToUpdateFrom.getStatus();
+    this.priority = taskToUpdateFrom.getPriority();
   }
 
   public UUID getId() {
@@ -126,11 +125,11 @@ public class Task {
     this.createdAt = createdAt;
   }
 
-  public UUID getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(UUID userId) {
-    this.userId = userId;
+  public void setUser(User user) {
+    this.user = user;
   }
 }

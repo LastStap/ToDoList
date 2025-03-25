@@ -9,6 +9,5 @@ public interface CommentRepository {
     Comment save(Comment comment);
     List<Comment> findAll();
     Optional<Comment> findById(UUID commentId);
-    Optional<Comment> findByTitle(String title);
     void delete(Comment comment);
 }

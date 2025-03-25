@@ -10,48 +10,52 @@ import org.springframework.stereotype.Component;
 public class CommentMapper {
 
   public CommentDto toDto(Comment comment) {
-    return new CommentDto(
-        comment.getId(),
-        comment.getContent(),
-        comment.getCreatedAt(),
-        comment.getTaskId(),
-        comment.getUserId());
+    return null;
+//    return new CommentDto(
+//        comment.getId(),
+//        comment.getContent(),
+//        comment.getCreatedAt(),
+//        comment.getTaskId(),
+//        comment.getUserId());
   }
 
   public Comment toDomain(CommentDto commentDto) {
-    return new Comment(
-        null,
-        commentDto.getContent(),
-        commentDto.getCreatedAt(),
-        commentDto.getTaskId(),
-        commentDto.getUserId());
+    return null;
+//    return new Comment(
+//        null,
+//        commentDto.getContent(),
+//        commentDto.getCreatedAt(),
+//        commentDto.getTaskId(),
+//        commentDto.getUserId());
   }
 
   public Comment toDomain(UUID commentId, CommentDto commentDto) {
-    return new Comment(
-        commentDto.getId(),
-        commentDto.getContent(),
-        commentDto.getCreatedAt(),
-        commentDto.getTaskId(),
-        commentDto.getUserId());
+    return null;
+//    return new Comment(
+//        commentDto.getId(),
+//        commentDto.getContent(),
+//        commentDto.getCreatedAt(),
+//        commentDto.getTaskId(),
+//        commentDto.getUserId());
   }
 
   public Comment toDomain(CommentEntity commentEntity) {
-    return new Comment(
-        commentEntity.getId(),
-        commentEntity.getContent(),
-        commentEntity.getCreatedAt(),
-        commentEntity.getTask().getId(),
-        commentEntity.getUser().getId());
+    return null;
+//    return new Comment(
+//        commentEntity.getId(),
+//        commentEntity.getContent(),
+//        commentEntity.getCreatedAt(),
+//        commentEntity.getTask().getId(),
+//        commentEntity.getUser().getId());
   }
 
-  public CommentEntity toEntity(Comment comment) {
-    return new CommentEntity(
-            comment.getId(),
-            comment.getContent(),
-            comment.getCreatedAt(),
-            comment.getTaskId(),
-            comment.getUserId()
-    );
-  }
+//  public CommentEntity toEntity(Comment comment) {
+//    return new CommentEntity(
+//            comment.getId(),
+//            comment.getContent(),
+//            comment.getCreatedAt(),
+//            comment.getTaskId(),
+//            comment.getUserId()
+//    );
+//  }
 }

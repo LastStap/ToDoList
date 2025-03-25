@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.repository.entity;
 
-public enum TaskPriority {
+public enum TaskPriorityEntity {
   LOW,
   MEDIUM,
   HIGH

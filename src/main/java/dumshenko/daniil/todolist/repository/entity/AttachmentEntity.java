@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "attachment")
+@Table(name = "attachments")
 public class AttachmentEntity {
 
   @Id
@@ -31,7 +31,7 @@ public class AttachmentEntity {
   @Column(name = "uploaded_at")
   private String uploadedAt;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "task_id")
   private TaskEntity taskEntity;
 }

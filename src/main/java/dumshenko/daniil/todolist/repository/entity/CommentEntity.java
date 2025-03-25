@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "comment")
+@Table(name = "comments")
 public class CommentEntity {
 
   @Id
@@ -25,11 +25,11 @@ public class CommentEntity {
   @Column(name = "created_at")
   private Instant createdAt;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
   private UserEntity user;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "task_id", nullable = false)
   private TaskEntity task;
 

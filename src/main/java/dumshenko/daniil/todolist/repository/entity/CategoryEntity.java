@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class CategoryEntity {
 
   @Id
@@ -29,12 +29,12 @@ public class CategoryEntity {
   @Column(name = "created_at")
   private Instant createdAt;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
   private UserEntity userEntity;
 
-  @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-  private List<TaskCategoryEntity> taskCategoryEntities;
+  @ManyToMany(mappedBy = "categoryEntities", fetch = FetchType.EAGER)
+  private List<TaskEntity> taskEntities;
 
   public CategoryEntity() {}
 
@@ -44,13 +44,13 @@ public class CategoryEntity {
       String description,
       Instant createdAt,
       UserEntity userEntity,
-      List<TaskCategoryEntity> taskCategoryEntities) {
+      List<TaskEntity> taskEntities) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.createdAt = createdAt;
     this.userEntity = userEntity;
-    this.taskCategoryEntities = taskCategoryEntities;
+    this.taskEntities = taskEntities;
   }
 
   @Override
@@ -62,12 +62,12 @@ public class CategoryEntity {
         && Objects.equals(description, that.description)
         && Objects.equals(createdAt, that.createdAt)
         && Objects.equals(userEntity, that.userEntity)
-        && Objects.equals(taskCategoryEntities, that.taskCategoryEntities);
+        && Objects.equals(taskEntities, that.taskEntities);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, createdAt, userEntity, taskCategoryEntities);
+    return Objects.hash(id, name, description, createdAt, userEntity, taskEntities);
   }
 
   @Override
@@ -87,7 +87,7 @@ public class CategoryEntity {
         + ", userEntity="
         + userEntity
         + ", taskCategoryEntities="
-        + taskCategoryEntities
+        + taskEntities
         + '}';
   }
 }
