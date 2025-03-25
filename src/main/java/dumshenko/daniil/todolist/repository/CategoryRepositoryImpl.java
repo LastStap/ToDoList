@@ -26,11 +26,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
   @Override
   public Category save(Category category) {
-    CategoryEntity categoryEntity = categoryMapper.toEntity(category);
-
-    CategoryEntity savedCategoryEntity = categoryJpaRepository.save(categoryEntity);
-
-    return categoryMapper.toDomain(savedCategoryEntity);
+    return null;
+//    CategoryEntity categoryEntity = categoryMapper.toEntity(category);
+//
+//    CategoryEntity savedCategoryEntity = categoryJpaRepository.save(categoryEntity);
+//
+//    return categoryMapper.toDomain(savedCategoryEntity);
   }
 
   @Override
@@ -41,11 +42,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
   @Override
   public Optional<Category> findById(UUID categoryId) {
     return categoryJpaRepository.findById(categoryId).map(categoryMapper::toDomain);
-  }
-
-  @Override
-  public Optional<Category> findByTitle(String title) {
-    return categoryJpaRepository.findByTitle(title).map(categoryMapper::toDomain);
   }
 
   @Override

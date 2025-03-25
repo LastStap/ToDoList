@@ -7,121 +7,87 @@ import dumshenko.daniil.todolist.domain.model.Task;
 import dumshenko.daniil.todolist.domain.model.TaskPriority;
 import dumshenko.daniil.todolist.domain.model.TaskStatus;
 import dumshenko.daniil.todolist.domain.model.User;
-import dumshenko.daniil.todolist.domain.repository.UserRepository;
+import dumshenko.daniil.todolist.repository.entity.CategoryEntity;
 import dumshenko.daniil.todolist.repository.entity.TaskEntity;
-import dumshenko.daniil.todolist.repository.entity.UserEntity;
+import dumshenko.daniil.todolist.repository.entity.TaskPriorityEntity;
+
+import java.util.List;
 import java.util.UUID;
+
+import dumshenko.daniil.todolist.repository.entity.TaskStatusEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapper {
 
-  private TaskStatusDto convertStatusToDto(TaskStatus status) {
-    return status != null ? TaskStatusDto.valueOf(status.name()) : null;
-  }
+    private final UserMapper userMapper;
 
-  private TaskPriorityDto convertPriorityToDto(TaskPriority priority) {
-    return priority != null ? TaskPriorityDto.valueOf(priority.name()) : null;
-  }
+    @Autowired
+    public TaskMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
-  private TaskStatus convertStatusToDomain(TaskStatusDto statusDto) {
-    return statusDto != null ? TaskStatus.valueOf(statusDto.name()) : null;
-  }
+    public TaskDto toDto(Task task) {
+        return new TaskDto(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                TaskStatusDto.valueOf(task.getStatus().name()),
+                TaskPriorityDto.valueOf(task.getPriority().name()),
+                task.getDueDate(),
+                task.getCreatedAt(),
+                task.getUser().getId());
+    }
 
-  private TaskPriority convertPriorityToDomain(TaskPriorityDto priorityDto) {
-    return priorityDto != null ? TaskPriority.valueOf(priorityDto.name()) : null;
-  }
+    public Task toDomain(TaskDto taskDto, User user) {
+        return new Task(
+                null,
+                taskDto.getTitle(),
+                taskDto.getDescription(),
+                TaskStatus.valueOf(taskDto.getStatus().name()),
+                TaskPriority.valueOf(taskDto.getPriority().name()),
+                taskDto.getDueDate(),
+                taskDto.getCreatedAt(),
+                user);
+    }
 
-  private TaskStatus convertStatusToDomain(
-      dumshenko.daniil.todolist.repository.entity.TaskStatus statusEntity) {
-    return statusEntity != null ? TaskStatus.valueOf(statusEntity.name()) : null;
-  }
+    public Task toDomain(TaskDto taskDto) {
+        return new Task(
+                null,
+                taskDto.getTitle(),
+                taskDto.getDescription(),
+                TaskStatus.valueOf(taskDto.getStatus().name()),
+                TaskPriority.valueOf(taskDto.getPriority().name()),
+                taskDto.getDueDate(),
+                taskDto.getCreatedAt(),
+                null);
+    }
 
-  private TaskPriority convertPriorityToDomain(
-      dumshenko.daniil.todolist.repository.entity.TaskPriority priorityEntity) {
-    return priorityEntity != null ? TaskPriority.valueOf(priorityEntity.name()) : null;
-  }
+    public Task toDomain(TaskEntity taskEntity) {
+        return new Task(
+                taskEntity.getId(),
+                taskEntity.getTitle(),
+                taskEntity.getDescription(),
+                TaskStatus.valueOf(taskEntity.getStatus().name()),
+                TaskPriority.valueOf(taskEntity.getPriority().name()),
+                taskEntity.getDueDate(),
+                taskEntity.getCreatedAt(),
+                userMapper.toDomain(taskEntity.getUserEntity()));
+    }
 
-  private dumshenko.daniil.todolist.repository.entity.TaskStatus convertStatusToEntity(
-      TaskStatus status) {
-    return status != null
-        ? dumshenko.daniil.todolist.repository.entity.TaskStatus.valueOf(status.name())
-        : null;
-  }
-
-  private dumshenko.daniil.todolist.repository.entity.TaskPriority convertPriorityToEntity(
-      TaskPriority priority) {
-    return priority != null
-        ? dumshenko.daniil.todolist.repository.entity.TaskPriority.valueOf(priority.name())
-        : null;
-  }
-
-  public TaskDto toDto(Task task) {
-    return new TaskDto(
-        task.getId(),
-        task.getTitle(),
-        task.getDescription(),
-        convertStatusToDto(task.getStatus()),
-        convertPriorityToDto(task.getPriority()),
-        task.getDueDate(),
-        task.getCreatedAt(),
-        task.getUserId());
-  }
-
-  public Task toDomain(TaskDto taskDto) {
-    return new Task(
-        null,
-        taskDto.getTitle(),
-        taskDto.getDescription(),
-        convertStatusToDomain(taskDto.getStatus()),
-        convertPriorityToDomain(taskDto.getPriority()),
-        taskDto.getDueDate(),
-        taskDto.getCreatedAt(),
-        taskDto.getUserId());
-  }
-
-  public Task toDomain(TaskDto taskDto, UUID taskId) {
-    return new Task(
-        taskDto.getId(),
-        taskDto.getTitle(),
-        taskDto.getDescription(),
-        convertStatusToDomain(taskDto.getStatus()),
-        convertPriorityToDomain(taskDto.getPriority()),
-        taskDto.getDueDate(),
-        taskDto.getCreatedAt(),
-        taskDto.getUserId());
-  }
-
-  public Task toDomain(TaskEntity taskEntity) {
-    return new Task(
-        taskEntity.getId(),
-        taskEntity.getTitle(),
-        taskEntity.getDescription(),
-        convertStatusToDomain(taskEntity.getStatus()),
-        convertPriorityToDomain(taskEntity.getPriority()),
-        taskEntity.getDueDate(),
-        taskEntity.getCreatedAt(),
-        taskEntity.getUserEntity().getId());
-  }
-
-  public TaskEntity toEntity(Task task, UserRepository userRepository) {
-    User user = userRepository
-            .findById(task.getUserId())
-            .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-    UserEntity userEntity = new UserEntity();
-    userEntity.setId(user.getId());
-
-    return new TaskEntity(
-            task.getId(),
-            task.getTitle(),
-            task.getDescription(),
-            convertStatusToEntity(task.getStatus()),
-            convertPriorityToEntity(task.getPriority()),
-            task.getDueDate(),
-            task.getCreatedAt(),
-            userEntity
-    );
-  }
+    public TaskEntity toEntity(Task task) {
+        return new TaskEntity(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                TaskStatusEntity.valueOf(task.getStatus().name()),
+                TaskPriorityEntity.valueOf(task.getPriority().name()),
+                task.getDueDate(),
+                task.getCreatedAt(),
+                userMapper.toEntity(task.getUser())
+        );
+    }
 
 }

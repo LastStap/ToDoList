@@ -1,6 +1,6 @@
 package dumshenko.daniil.todolist.repository.entity;
 
-public enum TaskStatus {
+public enum TaskStatusEntity {
   PENDING,
   IN_PROGRESS,
   COMPLETED

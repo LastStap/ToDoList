@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AttachmentDto {
 
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private String id;
 
   @JsonProperty("file_name")

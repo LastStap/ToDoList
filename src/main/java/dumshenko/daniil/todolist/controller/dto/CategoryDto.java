@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 public class CategoryDto {
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private UUID id;
   private String name;
   private String description;

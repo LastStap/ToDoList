@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "subtask")
+@Table(name = "subtasks")
 public class SubtaskEntity {
 
   @Id
@@ -26,7 +26,7 @@ public class SubtaskEntity {
   @Column(name = "created_at")
   private Instant createdAt;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "task_id", nullable = false)
   private TaskEntity taskEntity;
 

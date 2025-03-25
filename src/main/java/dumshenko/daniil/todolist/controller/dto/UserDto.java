@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class UserDto {
 
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private final UUID id;
   private final String username;
   private final String email;

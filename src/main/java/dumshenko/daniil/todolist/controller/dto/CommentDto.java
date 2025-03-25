@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CommentDto {
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private UUID id;
   private String content;
 

@@ -25,11 +25,12 @@ public class SubtaskRepositoryImpl implements SubtaskRepository {
 
   @Override
   public Subtask save(Subtask subtask) {
-    SubtaskEntity subtaskEntity = subtaskMapper.toEntity(subtask);
-
-    SubtaskEntity savedSubtaskEntity = subtaskJpaRepository.save(subtaskEntity);
-
-    return subtaskMapper.toDomain(savedSubtaskEntity);
+    return null;
+//    SubtaskEntity subtaskEntity = subtaskMapper.toEntity(subtask);
+//
+//    SubtaskEntity savedSubtaskEntity = subtaskJpaRepository.save(subtaskEntity);
+//
+//    return subtaskMapper.toDomain(savedSubtaskEntity);
   }
 
   @Override

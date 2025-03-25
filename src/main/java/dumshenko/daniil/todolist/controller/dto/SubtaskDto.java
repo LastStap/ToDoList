@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class SubtaskDto {
 
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private UUID id;
   private String title;
   private String status;

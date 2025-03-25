@@ -8,19 +8,20 @@ import java.util.UUID;
 
 public class TaskDto {
 
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private final UUID id;
   private final String title;
   private final String description;
   private final TaskStatusDto status;
   private final TaskPriorityDto priority;
 
-  @JsonProperty("due_date")
+  @JsonProperty(value = "due_date", access = JsonProperty.Access.READ_ONLY)
   private Instant dueDate;
 
-  @JsonProperty("created_at")
+  @JsonProperty(value = "created_at", access = JsonProperty.Access.READ_ONLY)
   private Instant createdAt;
 
-  @JsonProperty("user_id")
+  @JsonProperty(value = "user_id")
   private UUID userId;
 
   public TaskDto(UUID id, String title, String description, TaskStatusDto status, TaskPriorityDto priority, Instant dueDate, Instant createdAt, UUID userId) {

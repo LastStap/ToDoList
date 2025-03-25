@@ -26,11 +26,12 @@ public class CommentRepositoryImpl implements CommentRepository {
 
   @Override
   public Comment save(Comment comment) {
-    CommentEntity commentEntity = commentMapper.toEntity(comment);
-
-    CommentEntity commentEntitySaved = commentJpaRepository.save(commentEntity);
-
-    return commentMapper.toDomain(commentEntitySaved);
+    return null;
+//    CommentEntity commentEntity = commentMapper.toEntity(comment);
+//
+//    CommentEntity commentEntitySaved = commentJpaRepository.save(commentEntity);
+//
+//    return commentMapper.toDomain(commentEntitySaved);
   }
 
   @Override
@@ -41,11 +42,6 @@ public class CommentRepositoryImpl implements CommentRepository {
   @Override
   public Optional<Comment> findById(UUID commentId) {
     return commentJpaRepository.findById(commentId).map(commentMapper::toDomain);
-  }
-
-  @Override
-  public Optional<Comment> findByTitle(String title) {
-    return commentJpaRepository.findByTitle(title).map(commentMapper::toDomain);
   }
 
   @Override

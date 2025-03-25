@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentJpaRepository extends JpaRepository<CommentEntity, UUID> {
-    Optional<CommentEntity> findByTitle(String title);
 }

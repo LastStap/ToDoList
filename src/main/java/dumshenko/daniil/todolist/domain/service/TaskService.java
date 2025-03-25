@@ -16,7 +16,7 @@ public class TaskService {
   private final TaskRepository taskRepository;
 
   @Autowired
-  public TaskService(@Qualifier("taskRepositoryImpl") TaskRepository taskRepository) {
+  public TaskService(TaskRepository taskRepository) {
     this.taskRepository = taskRepository;
   }
 
