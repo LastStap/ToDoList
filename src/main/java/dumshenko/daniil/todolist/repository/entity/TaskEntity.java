@@ -24,9 +24,11 @@ public class TaskEntity {
   private String description;
 
   @Column(name = "status")
+  @Enumerated(EnumType.STRING)
   private TaskStatusEntity status;
 
   @Column(name = "priority")
+  @Enumerated(EnumType.STRING)
   private TaskPriorityEntity priority;
 
   @Column(name = "due_date")
