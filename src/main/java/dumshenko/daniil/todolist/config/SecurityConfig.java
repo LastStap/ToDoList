@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -64,8 +66,18 @@ public class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .cors(Customizer.withDefaults())
-        .csrf(AbstractHttpConfigurer::disable)
+            .cors(
+                    cors ->
+                            cors.configurationSource(
+                                    _ -> {
+                                      CorsConfiguration configuration = new CorsConfiguration();
+                                      configuration.setAllowedOrigins(List.of("*"));
+                                      configuration.setAllowedMethods(List.of("*"));
+                                      configuration.setAllowedHeaders(List.of("*"));
+                                      return configuration;
+                                    }))
+
+            .csrf(AbstractHttpConfigurer::disable)
         .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .exceptionHandling(
             e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
