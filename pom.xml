@@ -33,8 +33,8 @@
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <postgresql.version>42.7.7</postgresql.version>
         <liquibase-core.version>4.33.0</liquibase-core.version>
-        <postgresql.version>42.7.5</postgresql.version>
         <spotless-maven-plugin.version>2.44.5</spotless-maven-plugin.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.8.9</springdoc-openapi-starter-webmvc-ui.version>
         <jjwt.version>0.12.6</jjwt.version>
