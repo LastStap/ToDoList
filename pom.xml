@@ -28,7 +28,7 @@
         <url/>
     </scm>
     <properties>
-        <openapi-generator-maven-plugin.version>7.13.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi.version>1.8.0</springdoc-openapi.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
