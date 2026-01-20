@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
@@ -21,7 +22,7 @@ public class OpenApiConfig {
     SecurityScheme securityScheme =
         new SecurityScheme()
             .type(SecurityScheme.Type.HTTP)
-            .scheme("Bearer")
+            .scheme("bearer")
             .bearerFormat("JWT")
             .in(SecurityScheme.In.HEADER)
             .name(HttpHeaders.AUTHORIZATION);
@@ -34,7 +35,13 @@ public class OpenApiConfig {
     server.setDescription("ToDo List API");
     server.setUrl("/");
 
+    Info info = new Info()
+            .title("ToDoList API")
+            .version("1.0.0")
+            .description("API documentation for ToDoList application");
+
     return new OpenAPI()
+            .info(info)
             .servers(List.of(server))
             .components(components)
             .addSecurityItem(securityRequirement);
